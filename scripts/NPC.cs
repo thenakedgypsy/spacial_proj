@@ -5,46 +5,42 @@ using System.ComponentModel;
 
 public partial class NPC : Area2D
 {
-
-	public string name;
+	public string name;	
 	private bool playerNear;
 	public bool isTalking;
-	public List<string> dialogues;
+	public List<string> DialogueList;
 	public int currentDialogue;
 	private Control ChatBubbleControl;
-
-	// Called when the node enters the scene tree for the first time.
+	private AnimatedSprite2D ChatBubble;
+	public RichTextLabel Dialogue;
 	public override void _Ready()
 	{
+		Initialize();
+	}
+
+	public void Initialize()
+	{
+		currentDialogue = 0;
 		ChatBubbleControl = GetNode<Control>("ChatBubbleControl");
-		GD.Print("NPC Loaded.");
+		ChatBubble = ChatBubbleControl.GetNode<AnimatedSprite2D>("ChatBubble");
+		Dialogue = ChatBubble.GetNode<RichTextLabel>("RichTextLabel");
 		playerNear = false;
 		isTalking = false;
-
+		DialogueList = new List<string>();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
 		checkTalk();
-		if(isTalking)
-		{
-			
-			ChatBubbleControl.Visible = true;
-			GD.Print($" STATUS: {ChatBubbleControl.Visible}");
-		}
-		else
-		{
-			ChatBubbleControl.Visible = false;
-		}
-		
+		checkBubble();
+		Dialogue.Text = DialogueList[currentDialogue];
 	}
 
 	private void checkTalk()
 	{
 		if(playerNear && Input.IsActionJustPressed("ui_accept"))
-		{
-			
+		{			
 			isTalking = true;
 			talk();
 		}
@@ -56,6 +52,18 @@ public partial class NPC : Area2D
 		{
 			playerNear = true;
 			GD.Print("Player is next to an NPC");
+		}
+	}
+
+	public void checkBubble()
+	{
+		if(isTalking)
+		{	
+			ChatBubbleControl.Visible = true;
+		}
+		else
+		{
+			ChatBubbleControl.Visible = false;
 		}
 	}
 
@@ -71,7 +79,17 @@ public partial class NPC : Area2D
 
 	public virtual void talk()
 	{
-		GD.Print("The Player is now talking with this NPC");
+		GD.Print("Talking is happening");
+		GD.Print($"{currentDialogue + 1} / {DialogueList.Count - 1}");
+		if(currentDialogue <= DialogueList.Count)
+		{
+			currentDialogue++;
+		}		
+	}
+
+	public void AddDialogue(string text)
+	{
+		DialogueList.Add(text);
 	}
 
 }

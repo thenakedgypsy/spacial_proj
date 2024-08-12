@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://fq6q0sonfrep" path="res://prefabs/Player.tscn" id="1_56txp"]
 [ext_resource type="Texture2D" uid="uid://b1h1qdfm05la6" path="res://assets/TileSet v1.0.png" id="2_07fwi"]
 [ext_resource type="PackedScene" uid="uid://4gl4rc3qctuu" path="res://prefabs/NPCTemplate.tscn" id="3_6fmug"]
-[ext_resource type="PackedScene" uid="uid://c3eiflikb4tin" path="res://prefabs/NPC.tscn" id="3_msnv0"]
+[ext_resource type="PackedScene" uid="uid://dp3u5gh40l7xe" path="res://prefabs/NPCs/Gerald.tscn" id="4_dpyqi"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_18k8s"]
 resource_name = "Industrial"
@@ -925,8 +925,11 @@ zoom = Vector2(2, 2)
 position_smoothing_enabled = true
 position_smoothing_speed = 1.0
 
-[node name="NPC" parent="." instance=ExtResource("3_msnv0")]
-position = Vector2(30, 63)
-
 [node name="NPC2" parent="." instance=ExtResource("3_6fmug")]
-position = Vector2(128, 161)
+position = Vector2(196, 65)
+
+[node name="NPC" parent="." instance=ExtResource("3_6fmug")]
+position = Vector2(63, 61)
+
+[node name="NPC3" parent="." instance=ExtResource("4_dpyqi")]
+position = Vector2(129, -31)

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://dp3u5gh40l7xe"]
+
+[ext_resource type="PackedScene" uid="uid://4gl4rc3qctuu" path="res://prefabs/NPCTemplate.tscn" id="1_kgr4p"]
+[ext_resource type="Script" path="res://scripts/NPC Scripts/Gerald.cs" id="2_cylvr"]
+
+[node name="NPC" instance=ExtResource("1_kgr4p")]
+script = ExtResource("2_cylvr")
+
+[node name="ChatBubble" parent="ChatBubbleControl" index="0"]
+z_index = 0

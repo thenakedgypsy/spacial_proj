@@ -21,11 +21,11 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8y5i5"]
 radius = 7.0
-height = 22.0
+height = 24.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ms0ap"]
-radius = 23.0
-height = 46.0
+radius = 31.0
+height = 62.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_dvvkc"]
 animations = [{
@@ -47,9 +47,11 @@ sprite_frames = SubResource("SpriteFrames_3kxy0")
 [node name="Body" type="CharacterBody2D" parent="."]
 
 [node name="Hitbox" type="CollisionShape2D" parent="Body"]
+position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_8y5i5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_ms0ap")
 
 [node name="ChatBubbleControl" type="Control" parent="."]
@@ -60,15 +62,16 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="ChatBubble" type="AnimatedSprite2D" parent="ChatBubbleControl"]
+z_index = 2
 position = Vector2(0, -41)
 scale = Vector2(0.915663, 0.652778)
 sprite_frames = SubResource("SpriteFrames_dvvkc")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="ChatBubbleControl/ChatBubble"]
-offset_left = -80.0
+offset_left = -78.0
 offset_top = -14.0
-offset_right = 239.0
-offset_bottom = 41.0
+offset_right = 234.0
+offset_bottom = 39.0
 scale = Vector2(0.5, 0.5)
 text = "THIS IS SOME TEXT"
 
