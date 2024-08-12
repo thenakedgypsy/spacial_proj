@@ -925,8 +925,8 @@ zoom = Vector2(2, 2)
 position_smoothing_enabled = true
 position_smoothing_speed = 1.0
 
-[node name="NPC" parent="." instance=ExtResource("3_6fmug")]
-position = Vector2(127, 160)
+[node name="NPC" parent="." instance=ExtResource("3_msnv0")]
+position = Vector2(30, 63)
 
-[node name="NPC2" parent="." instance=ExtResource("3_msnv0")]
-position = Vector2(60, 62)
+[node name="NPC2" parent="." instance=ExtResource("3_6fmug")]
+position = Vector2(128, 161)
