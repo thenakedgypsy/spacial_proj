@@ -13,6 +13,10 @@ public partial class NPC : Area2D
 	private Control ChatBubbleControl;
 	private AnimatedSprite2D ChatBubble;
 	public RichTextLabel Dialogue;
+	public bool hasKeyText;
+	public int keyTextIndex; //this could be a list maybes?
+	public int previousKeyReached;
+	
 	public override void _Ready()
 	{
 		Initialize();
@@ -40,9 +44,16 @@ public partial class NPC : Area2D
 	private void checkTalk()
 	{
 		if(playerNear && Input.IsActionJustPressed("ui_accept"))
-		{			
-			isTalking = true;
-			talk();
+		{	
+			if(isTalking)
+			{
+				isTalking = false;
+			}
+			else
+			{	
+				isTalking = true;
+				talk();
+			}
 		}
 	}
 
@@ -71,7 +82,19 @@ public partial class NPC : Area2D
 	{
 		if(body is Player)
 		{
-			isTalking = false;
+			if(isTalking)
+			{
+				isTalking = false;
+				if(hasKeyText)
+				{
+					currentDialogue = 0;
+				}
+				else
+				{
+					currentDialogue --;
+				}	
+				
+			}
 			playerNear = false;
 			GD.Print("Player is no longer next to an NPC");
 		}
@@ -81,6 +104,10 @@ public partial class NPC : Area2D
 	{
 		GD.Print("Talking is happening");
 		GD.Print($"{currentDialogue + 1} / {DialogueList.Count - 1}");
+		if(currentDialogue == keyTextIndex)
+		{
+			hasKeyText = false;
+		}
 		if(currentDialogue <= DialogueList.Count)
 		{
 			currentDialogue++;
