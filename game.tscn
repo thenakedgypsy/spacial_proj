@@ -920,7 +920,7 @@ z_index = 2
 position = Vector2(130, 76)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
-position = Vector2(0, -10)
+position = Vector2(0, -11)
 zoom = Vector2(2, 2)
 position_smoothing_enabled = true
 position_smoothing_speed = 1.0
@@ -929,7 +929,7 @@ position_smoothing_speed = 1.0
 position = Vector2(196, 65)
 
 [node name="NPC" parent="." instance=ExtResource("3_6fmug")]
-position = Vector2(63, 61)
+position = Vector2(62, 63)
 
 [node name="NPC3" parent="." instance=ExtResource("4_dpyqi")]
 position = Vector2(129, -31)

@@ -13,9 +13,8 @@ public partial class NPC : Area2D
 	private Control ChatBubbleControl;
 	private AnimatedSprite2D ChatBubble;
 	public RichTextLabel Dialogue;
-	public bool hasKeyText;
-	public int keyTextIndex; //this could be a list maybes?
-	public int previousKeyReached;
+	public List<int> keyTextIndexList;							
+	public int previousKeyReached; //so we can just loop back to the last item of key text 
 	
 	public override void _Ready()
 	{
@@ -30,7 +29,10 @@ public partial class NPC : Area2D
 		Dialogue = ChatBubble.GetNode<RichTextLabel>("RichTextLabel");
 		playerNear = false;
 		isTalking = false;
+		previousKeyReached = 0;
 		DialogueList = new List<string>();
+		keyTextIndexList = new List<int>();
+		AddDialogue("");
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -84,17 +86,20 @@ public partial class NPC : Area2D
 		{
 			if(isTalking)
 			{
-				isTalking = false;
-				if(hasKeyText)
-				{
-					currentDialogue = 0;
-				}
-				else
-				{
-					currentDialogue --;
-				}	
-				
+				isTalking = false;	
 			}
+			if(previousKeyReached > 0)
+			{
+			currentDialogue = previousKeyReached;
+			}
+			else
+			{
+				currentDialogue = 0;
+			}
+		//	if(currentDialogue > DialogueList.Count)	//possibly unneeded check 
+		//	{
+		//		currentDialogue = DialogueList.Count;
+		//	} 
 			playerNear = false;
 			GD.Print("Player is no longer next to an NPC");
 		}
@@ -102,16 +107,19 @@ public partial class NPC : Area2D
 
 	public virtual void talk()
 	{
-		GD.Print("Talking is happening");
-		GD.Print($"{currentDialogue + 1} / {DialogueList.Count - 1}");
-		if(currentDialogue == keyTextIndex)
+		GD.Print($"Dialogue Line {currentDialogue} / {DialogueList.Count -1 }");
+		foreach(int keyTextIndex in keyTextIndexList)
 		{
-			hasKeyText = false;
+			if(currentDialogue + 1 == keyTextIndex)
+			{
+				previousKeyReached = keyTextIndex;
+			}
 		}
-		if(currentDialogue <= DialogueList.Count)
+		if(currentDialogue < DialogueList.Count - 1)
 		{
 			currentDialogue++;
-		}		
+		}	
+
 	}
 
 	public void AddDialogue(string text)
