@@ -8,7 +8,9 @@ public partial class NPCTemplate : NPC
 	{
 		base.Initialize();
 		
-
+		//add dialogue like below. Key points will need adding to the list, keypoints will start the looped dialogue
+		//again from the line after them. 
+		//multiple key points can be added
 		base.AddDialogue("This is the first thing I say.");
 		base.AddDialogue("This is the second thing I say.");
 		base.AddDialogue("This is some key text, after seeing this I'll talk differently.");

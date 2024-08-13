@@ -10,37 +10,37 @@ public partial class NPC : Area2D
 	public bool isTalking;
 	public List<string> DialogueList;
 	public int currentDialogue;
-	private Control ChatBubbleControl;
 	private AnimatedSprite2D ChatBubble;
 	public RichTextLabel Dialogue;
 	public List<int> keyTextIndexList;							
 	public int previousKeyReached; //so we can just loop back to the last item of key text 
-	
+	private bool _bubbleUnfolded;
 	public override void _Ready()
 	{
 		Initialize();
+		
 	}
 
 	public void Initialize()
 	{
 		currentDialogue = 0;
-		ChatBubbleControl = GetNode<Control>("ChatBubbleControl");
-		ChatBubble = ChatBubbleControl.GetNode<AnimatedSprite2D>("ChatBubble");
+		ChatBubble = GetNode<AnimatedSprite2D>("ChatBubble");
+		GD.Print($"ChatBubble: {ChatBubble}");
 		Dialogue = ChatBubble.GetNode<RichTextLabel>("RichTextLabel");
 		playerNear = false;
 		isTalking = false;
 		previousKeyReached = 0;
 		DialogueList = new List<string>();
 		keyTextIndexList = new List<int>();
-		AddDialogue("");
+		//AddDialogue("");
+		_bubbleUnfolded = true;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
 		checkTalk();
-		checkBubble();
-		Dialogue.Text = DialogueList[currentDialogue];
+		checkBubble();			
 	}
 
 	private void checkTalk()
@@ -49,12 +49,12 @@ public partial class NPC : Area2D
 		{	
 			if(isTalking)
 			{
-				isTalking = false;
+				isTalking = false;					
 			}
 			else
-			{	
-				isTalking = true;
-				talk();
+			{		
+				isTalking = true;	
+				talk();	
 			}
 		}
 	}
@@ -70,36 +70,37 @@ public partial class NPC : Area2D
 
 	public void checkBubble()
 	{
-		if(isTalking)
-		{	
-			ChatBubbleControl.Visible = true;
-		}
-		else
-		{
-			ChatBubbleControl.Visible = false;
-		}
+  		if (isTalking && !_bubbleUnfolded)
+  		{   
+  		    UnfoldChatBubble();
+			//Dialogue.Visible = true;
+  		    _bubbleUnfolded = true;            
+  		}
+  		else if (!isTalking && _bubbleUnfolded)
+  		{           
+  		    
+  		    FoldChatBubble();
+			//Dialogue.Visible = false;
+  		    _bubbleUnfolded = false;
+    	}
 	}
 
 	public void bodyExited(Node2D body)
 	{
 		if(body is Player)
 		{
-			if(isTalking)
-			{
-				isTalking = false;	
-			}
+      		isTalking = false;
+      		_bubbleUnfolded = false;  // Ensure the flag is reset
+      		FoldChatBubble(); 
+      		Dialogue.Visible = false;
 			if(previousKeyReached > 0)
 			{
-			currentDialogue = previousKeyReached;
+				currentDialogue = previousKeyReached;
 			}
 			else
 			{
 				currentDialogue = 0;
 			}
-		//	if(currentDialogue > DialogueList.Count)	//possibly unneeded check 
-		//	{
-		//		currentDialogue = DialogueList.Count;
-		//	} 
 			playerNear = false;
 			GD.Print("Player is no longer next to an NPC");
 		}
@@ -107,6 +108,7 @@ public partial class NPC : Area2D
 
 	public virtual void talk()
 	{
+		Dialogue.Text = DialogueList[currentDialogue];
 		GD.Print($"Dialogue Line {currentDialogue} / {DialogueList.Count -1 }");
 		foreach(int keyTextIndex in keyTextIndexList)
 		{
@@ -125,6 +127,27 @@ public partial class NPC : Area2D
 	public void AddDialogue(string text)
 	{
 		DialogueList.Add(text);
+	}
+	
+	public void UnfoldChatBubble()
+	{
+		ChatBubble.Animation = "unfold";
+		ChatBubble.Play();
+	}
+
+	public void FoldChatBubble()
+	{
+		ChatBubble.Animation = "fold";
+		ChatBubble.Play();
+		Dialogue.Visible = false;
+	}
+
+	public void BubbleAnimationFinished()
+	{
+		if (_bubbleUnfolded)
+   		{
+   		    Dialogue.Visible = true;
+   		}
 	}
 
 }
