@@ -104,6 +104,10 @@ public partial class NPC : Area2D
 
 	public virtual void talk()
 	{
+		if(currentDialogue < previousKeyReached)
+		{
+			currentDialogue = previousKeyReached;
+		}
 		Dialogue.Text = DialogueList[currentDialogue];
 		GD.Print($"Dialogue Line {currentDialogue} / {DialogueList.Count -1 }");
 		GD.Print($"HighestKeyReached {previousKeyReached}");
@@ -114,10 +118,7 @@ public partial class NPC : Area2D
 				previousKeyReached = keyTextIndex;
 			}
 		}
-		if(currentDialogue < DialogueList.Count - 1)
-		{
-			currentDialogue++;
-		}	
+		BumpDialogue();
 
 	}
 
@@ -159,5 +160,20 @@ public partial class NPC : Area2D
 			currentDialogue++;
 		}	
 	}
+	public void ForceKey(int key)
+	{
+		this.previousKeyReached = key;
+	}
+
+	public void BumpKey()
+	{
+		if(previousKeyReached < DialogueList.Count - 1)
+		{
+			this.previousKeyReached++;
+		}
+	}
 
 }
+
+
+//need to look at where currentDialogue gets increased / set

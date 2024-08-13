@@ -33,7 +33,7 @@ private bool _chattedToGerald;
 	public void ChattedToGerald()
 	{
 		_chattedToGerald = true;
-		base.BumpDialogue();
+		base.ForceKey(1);
 		base.AddDialogue("How was talking to Gerald?");
 		base.AddDialogue("Well thats great news!");
 		base.keyTextIndexList.Add(3);
