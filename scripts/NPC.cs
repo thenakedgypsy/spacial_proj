@@ -15,28 +15,26 @@ public partial class NPC : Area2D
 	public List<int> keyTextIndexList;							
 	public int previousKeyReached; //so we can just loop back to the last item of key text 
 	private bool _bubbleUnfolded;
+
 	public override void _Ready()
 	{
 		Initialize();
-		
+
 	}
 
 	public void Initialize()
 	{
 		currentDialogue = 0;
 		ChatBubble = GetNode<AnimatedSprite2D>("ChatBubble");
-		GD.Print($"ChatBubble: {ChatBubble}");
 		Dialogue = ChatBubble.GetNode<RichTextLabel>("RichTextLabel");
 		playerNear = false;
 		isTalking = false;
 		previousKeyReached = 0;
 		DialogueList = new List<string>();
 		keyTextIndexList = new List<int>();
-		//AddDialogue("");
 		_bubbleUnfolded = true;
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
 		checkTalk();
@@ -73,14 +71,12 @@ public partial class NPC : Area2D
   		if (isTalking && !_bubbleUnfolded)
   		{   
   		    UnfoldChatBubble();
-			//Dialogue.Visible = true;
   		    _bubbleUnfolded = true;            
   		}
   		else if (!isTalking && _bubbleUnfolded)
   		{           
   		    
   		    FoldChatBubble();
-			//Dialogue.Visible = false;
   		    _bubbleUnfolded = false;
     	}
 	}
@@ -110,6 +106,7 @@ public partial class NPC : Area2D
 	{
 		Dialogue.Text = DialogueList[currentDialogue];
 		GD.Print($"Dialogue Line {currentDialogue} / {DialogueList.Count -1 }");
+		GD.Print($"HighestKeyReached {previousKeyReached}");
 		foreach(int keyTextIndex in keyTextIndexList)
 		{
 			if(currentDialogue + 1 == keyTextIndex)
@@ -148,6 +145,19 @@ public partial class NPC : Area2D
    		{
    		    Dialogue.Visible = true;
    		}
+	}
+
+	public int GetKeyReached()
+	{
+		return this.previousKeyReached;
+	}
+
+	public void BumpDialogue()
+	{
+		if(currentDialogue < DialogueList.Count - 1)
+		{
+			currentDialogue++;
+		}	
 	}
 
 }

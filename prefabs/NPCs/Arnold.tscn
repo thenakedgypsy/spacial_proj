@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://da0458au6p4db"]
+
+[ext_resource type="PackedScene" uid="uid://4gl4rc3qctuu" path="res://prefabs/NPCTemplate.tscn" id="1_thby7"]
+[ext_resource type="Script" path="res://scripts/NPC Scripts/Arnold.cs" id="2_iopqt"]
+
+[node name="NPC" instance=ExtResource("1_thby7")]
+script = ExtResource("2_iopqt")

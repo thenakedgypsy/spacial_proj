@@ -8,6 +8,7 @@ script = ExtResource("2_cylvr")
 
 [node name="ChatBubble" parent="." index="3"]
 z_index = 0
+position = Vector2(2, -47)
 
 [node name="RichTextLabel" parent="ChatBubble" index="0"]
 offset_left = -78.0

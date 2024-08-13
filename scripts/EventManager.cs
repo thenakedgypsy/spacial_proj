@@ -2,36 +2,31 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class EventManager : Control
+public static class EventManager
 {
 
-	private Dictionary<string,bool> _triggerList;
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+	public static Dictionary<string,bool> _triggerList  = new Dictionary<string,bool>();
+
+
+	public static void AddTrigger(string key, bool state = false)
 	{
-		_triggerList = new Dictionary<string,bool>();
+		if(!_triggerList.ContainsKey(key))
+		{
+			_triggerList[key] = state;
+		}
+		
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
-	public void AddTrigger(string key, bool state = false)
-	{
-		_triggerList[key] = state;
-	}
-
-	public bool HasTrigger(string key)
+	public static bool HasTrigger(string key)
 	{
 		return _triggerList.ContainsKey(key);
 	}
 
-	public bool CheckTrigger(string key)
+	public static bool CheckTrigger(string key)
 	{
 		if(_triggerList.ContainsKey(key))
 		{
-			GD.Print($"Current status of trigger: '{key}' = {_triggerList[key]}");
+			//GD.Print($"Current status of trigger: '{key}' = {_triggerList[key]}");
 			return _triggerList[key];
 		}
 		else
@@ -41,7 +36,7 @@ public partial class EventManager : Control
 		}
 	}
 
-	public void FlipTrigger(string key)
+	public static void FlipTrigger(string key)
 	{
 		if(_triggerList.ContainsKey(key))
 		{
@@ -58,7 +53,7 @@ public partial class EventManager : Control
 		}
 	}
 
-	public void SetTrigger(string key,bool state)
+	public static void SetTrigger(string key,bool state)
 	{
 		if(_triggerList.ContainsKey(key))
 		{
@@ -68,6 +63,14 @@ public partial class EventManager : Control
 		else
 		{
 			GD.Print($"Trigger '{key}' does not exist");
+		}
+	}
+
+	public static void ClearTrigger(string key)
+	{
+		if(_triggerList.ContainsKey(key))
+		{
+			_triggerList.Remove(key);
 		}
 	}
 

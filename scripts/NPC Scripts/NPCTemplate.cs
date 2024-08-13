@@ -6,6 +6,8 @@ public partial class NPCTemplate : NPC
 
 	public override void _Ready()
 	{
+
+		
 		base.Initialize();
 		
 		//add dialogue like below. Key points will need adding to the list, keypoints will start the looped dialogue
@@ -16,8 +18,13 @@ public partial class NPCTemplate : NPC
 		base.AddDialogue("This is some key text, after seeing this I'll talk differently.");
 		base.keyTextIndexList.Add(3);
 		base.AddDialogue("Now I'll just repeat this.");
-		
+
 	}
+
+    public override void _Process(double delta)
+    {
+        base._Process(delta);
+    }
 
 
 }
