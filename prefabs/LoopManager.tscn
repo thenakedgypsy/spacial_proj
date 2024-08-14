@@ -13,19 +13,55 @@ script = ExtResource("1_67487")
 
 [node name="Button" type="Button" parent="LoopManager"]
 layout_mode = 0
-offset_left = 7.0
-offset_top = 6.0
-offset_right = 115.0
-offset_bottom = 37.0
-text = "SET LOOPS"
+offset_left = 86.0
+offset_top = 146.0
+offset_right = 133.0
+offset_bottom = 177.0
+text = "PLAY LOOPS"
+
+[node name="Button5" type="Button" parent="LoopManager"]
+layout_mode = 0
+offset_left = 87.0
+offset_top = 207.0
+offset_right = 191.0
+offset_bottom = 238.0
+text = "RESET ALL"
+
+[node name="Button6" type="Button" parent="LoopManager"]
+layout_mode = 0
+offset_left = 252.0
+offset_top = 167.0
+offset_right = 367.0
+offset_bottom = 198.0
+text = "CLEAR QUEUE"
 
 [node name="Button2" type="Button" parent="LoopManager"]
 layout_mode = 0
-offset_left = 7.0
-offset_top = 48.0
-offset_right = 173.0
-offset_bottom = 79.0
-text = "INSTANTIATE LOOPS"
+offset_left = 30.0
+offset_top = 34.0
+offset_right = 90.0
+offset_bottom = 65.0
+text = "SNARE"
 
-[connection signal="pressed" from="LoopManager/Button" to="LoopManager" method="_SetLoops" binds= ["Hat01", "Kick01", "Snare01", ""]]
-[connection signal="pressed" from="LoopManager/Button2" to="LoopManager" method="InstantiateLoops"]
+[node name="Button3" type="Button" parent="LoopManager"]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 34.0
+offset_right = 180.0
+offset_bottom = 65.0
+text = "KICK"
+
+[node name="Button4" type="Button" parent="LoopManager"]
+layout_mode = 0
+offset_left = 208.0
+offset_top = 34.0
+offset_right = 268.0
+offset_bottom = 65.0
+text = "HATS"
+
+[connection signal="pressed" from="LoopManager/Button" to="LoopManager" method="PlayLoops"]
+[connection signal="pressed" from="LoopManager/Button5" to="LoopManager" method="Reset"]
+[connection signal="pressed" from="LoopManager/Button6" to="LoopManager" method="ClearQueue"]
+[connection signal="pressed" from="LoopManager/Button2" to="LoopManager" method="_SetLoop1" binds= ["Snare01"]]
+[connection signal="pressed" from="LoopManager/Button3" to="LoopManager" method="_SetLoop2" binds= ["Kick01"]]
+[connection signal="pressed" from="LoopManager/Button4" to="LoopManager" method="_SetLoop3" binds= ["Hat01"]]
