@@ -10,18 +10,17 @@ private bool _chattedToGerald;
 		base.Initialize();
 		_chattedToGerald = false;
 		//requires a triggered event to talk more
-		EventManager.AddTrigger("ChattedToGerald");
 		//add dialogue like below. Key points will need adding to the list, keypoints will start the looped dialogue
 		//again from the line after them. 
 		//multiple key points can be added
-		base.AddDialogue("You should talk to Gerald and then talk to me...");
+		base.AddDialogue(("You should talk to Gerald and then talk to me...",false));
 	}
 
     public override void _Process(double delta)
     {
 		if(!_chattedToGerald)
 		{
-			if(EventManager.CheckTrigger("ChattedToGerald")) //checking the event 
+			if(TriggerManager.Instance.ChattedToGerald) //checking the event was -> EventManager.CheckTrigger("ChattedToGerald")
 			{
 
 				ChattedToGerald();
@@ -33,12 +32,10 @@ private bool _chattedToGerald;
 	public void ChattedToGerald()
 	{
 		_chattedToGerald = true;
-		base.ForceKey(1);
-		base.AddDialogue("How was talking to Gerald?");
-		base.AddDialogue("Well thats great news!");
-		base.keyTextIndexList.Add(3);
+		base.AddDialogue(("How was talking to Gerald?",false));
+		base.BumpLoopPoint(); //bumping the loop point after adding the dialogue to make this the next line said
+		base.AddDialogue(("Well thats great news! The trigger works!", false));
+		base.AddDialogue(("I'll just repeat this now.",true));
 
-		base.AddDialogue("I repeat this now!");
-		EventManager.ClearTrigger("ChattedToGerald");
 	}
 }

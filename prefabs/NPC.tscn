@@ -348,10 +348,11 @@ shape = SubResource("CapsuleShape2D_ms0ap")
 
 [node name="ChatBubble" type="AnimatedSprite2D" parent="."]
 z_index = 2
-position = Vector2(-2.38419e-07, -39)
+position = Vector2(-6.77626e-21, -30)
 scale = Vector2(0.915663, 0.652778)
 sprite_frames = SubResource("SpriteFrames_dvvkc")
 autoplay = "default"
+frame_progress = 0.516209
 
 [node name="RichTextLabel" type="RichTextLabel" parent="ChatBubble"]
 visible = false

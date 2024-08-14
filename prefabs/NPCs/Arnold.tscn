@@ -5,3 +5,7 @@
 
 [node name="NPC" instance=ExtResource("1_thby7")]
 script = ExtResource("2_iopqt")
+
+[node name="ChatBubble" parent="." index="3"]
+position = Vector2(5.68434e-14, -29)
+frame_progress = 0.261787

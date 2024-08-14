@@ -6,14 +6,13 @@ using System.ComponentModel;
 public partial class NPC : Area2D
 {
 	public string name;	
-	private bool playerNear;
-	public bool isTalking;
-	public List<string> DialogueList;
+	private bool _playerNear;
+	private bool _isTalking;
+	public List<(string,bool)> DialogueList;
 	public int currentDialogue;
-	private AnimatedSprite2D ChatBubble;
-	public RichTextLabel Dialogue;
-	public List<int> keyTextIndexList;							
-	public int previousKeyReached; //so we can just loop back to the last item of key text 
+	public AnimatedSprite2D ChatBubble;
+	public RichTextLabel Dialogue;					
+	public int CurrentLoopPoint; //so we can just loop back to the last item of key text 
 	private bool _bubbleUnfolded;
 
 	public override void _Ready()
@@ -27,31 +26,31 @@ public partial class NPC : Area2D
 		currentDialogue = 0;
 		ChatBubble = GetNode<AnimatedSprite2D>("ChatBubble");
 		Dialogue = ChatBubble.GetNode<RichTextLabel>("RichTextLabel");
-		playerNear = false;
-		isTalking = false;
-		previousKeyReached = 0;
-		DialogueList = new List<string>();
-		keyTextIndexList = new List<int>();
+		_playerNear = false;
+		_isTalking = false;
+		CurrentLoopPoint = 0;
+		DialogueList = new List<(string,bool)>();
 		_bubbleUnfolded = true;
 	}
 
 	public override void _Process(double delta)
 	{
 		checkTalk();
-		checkBubble();			
+		checkBubble();	
+			
 	}
 
 	private void checkTalk()
 	{
-		if(playerNear && Input.IsActionJustPressed("ui_accept"))
+		if(_playerNear && Input.IsActionJustPressed("ui_accept"))
 		{	
-			if(isTalking)
+			if(_isTalking)
 			{
-				isTalking = false;					
+				_isTalking = false;									
 			}
 			else
 			{		
-				isTalking = true;	
+				_isTalking = true;	
 				talk();	
 			}
 		}
@@ -61,19 +60,19 @@ public partial class NPC : Area2D
 	{
 		if(body is Player)
 		{
-			playerNear = true;
+			_playerNear = true;
 			GD.Print("Player is next to an NPC");
 		}
 	}
 
 	public void checkBubble()
 	{
-  		if (isTalking && !_bubbleUnfolded)
+  		if (_isTalking && !_bubbleUnfolded)
   		{   
   		    UnfoldChatBubble();
   		    _bubbleUnfolded = true;            
   		}
-  		else if (!isTalking && _bubbleUnfolded)
+		else if (!_isTalking && _bubbleUnfolded)
   		{           
   		    
   		    FoldChatBubble();
@@ -85,52 +84,51 @@ public partial class NPC : Area2D
 	{
 		if(body is Player)
 		{
-      		isTalking = false;
+      		_isTalking = false;
       		_bubbleUnfolded = false;  // Ensure the flag is reset
       		FoldChatBubble(); 
       		Dialogue.Visible = false;
-			if(previousKeyReached > 0)
+			if(CurrentLoopPoint > 0)
 			{
-				currentDialogue = previousKeyReached;
+				currentDialogue = CurrentLoopPoint;
 			}
 			else
 			{
 				currentDialogue = 0;
 			}
-			playerNear = false;
+			_playerNear = false;
 			GD.Print("Player is no longer next to an NPC");
 		}
 	}
 
 	public virtual void talk()
 	{
-		if(currentDialogue < previousKeyReached)
+		if(currentDialogue < CurrentLoopPoint)
 		{
-			currentDialogue = previousKeyReached;
+			currentDialogue = CurrentLoopPoint;
 		}
-		Dialogue.Text = DialogueList[currentDialogue];
-		GD.Print($"Dialogue Line {currentDialogue} / {DialogueList.Count -1 }");
-		GD.Print($"HighestKeyReached {previousKeyReached}");
-		foreach(int keyTextIndex in keyTextIndexList)
-		{
-			if(currentDialogue + 1 == keyTextIndex)
-			{
-				previousKeyReached = keyTextIndex;
-			}
+		Dialogue.Text = DialogueList[currentDialogue].Item1;
+		GD.Print($"Current Dialogue: {currentDialogue} / Total Dialogue: {DialogueList.Count -1 }");
+		GD.Print($"Current Loop Point {CurrentLoopPoint} / Total Dialogue: {DialogueList.Count -1 }");
+		if(DialogueList[currentDialogue].Item2) //if is set as a loop point
+		{	
+			CurrentLoopPoint = currentDialogue;
+			GD.Print($"New Loop Point: {CurrentLoopPoint}!");
 		}
 		BumpDialogue();
 
 	}
 
-	public void AddDialogue(string text)
+	public void AddDialogue((string text, bool isKey) dialogue)
 	{
-		DialogueList.Add(text);
+		DialogueList.Add(dialogue);
 	}
 	
 	public void UnfoldChatBubble()
 	{
 		ChatBubble.Animation = "unfold";
 		ChatBubble.Play();
+		GD.Print($"Bubble status {ChatBubble.Animation}");
 	}
 
 	public void FoldChatBubble()
@@ -138,6 +136,7 @@ public partial class NPC : Area2D
 		ChatBubble.Animation = "fold";
 		ChatBubble.Play();
 		Dialogue.Visible = false;
+		GD.Print($"Bubble status {ChatBubble.Animation}");
 	}
 
 	public void BubbleAnimationFinished()
@@ -150,7 +149,7 @@ public partial class NPC : Area2D
 
 	public int GetKeyReached()
 	{
-		return this.previousKeyReached;
+		return this.CurrentLoopPoint;
 	}
 
 	public void BumpDialogue()
@@ -162,14 +161,14 @@ public partial class NPC : Area2D
 	}
 	public void ForceKey(int key)
 	{
-		this.previousKeyReached = key;
+		this.CurrentLoopPoint = key;
 	}
 
-	public void BumpKey()
+	public void BumpLoopPoint()
 	{
-		if(previousKeyReached < DialogueList.Count - 1)
+		if(CurrentLoopPoint < DialogueList.Count - 1)
 		{
-			this.previousKeyReached++;
+			this.CurrentLoopPoint++;
 		}
 	}
 
