@@ -10,3 +10,22 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_67487")
+
+[node name="Button" type="Button" parent="LoopManager"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 6.0
+offset_right = 115.0
+offset_bottom = 37.0
+text = "SET LOOPS"
+
+[node name="Button2" type="Button" parent="LoopManager"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 48.0
+offset_right = 173.0
+offset_bottom = 79.0
+text = "INSTANTIATE LOOPS"
+
+[connection signal="pressed" from="LoopManager/Button" to="LoopManager" method="_SetLoops" binds= ["Hat01", "Kick01", "Snare01", ""]]
+[connection signal="pressed" from="LoopManager/Button2" to="LoopManager" method="InstantiateLoops"]

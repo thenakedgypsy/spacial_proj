@@ -16,8 +16,8 @@ public partial class LoopManager : Control
 	{
 		Initialize();
 		//PlayTestLoops();
-		SetLoops("Kick01", "Snare01","Hat01");
-		InstantiateLoops();
+		//SetLoops("Kick01", "Snare01","Hat01");
+		//InstantiateLoops();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -31,6 +31,11 @@ public partial class LoopManager : Control
 		Playing = new List<Node>();
 	}
 
+	public void SetScene1(string scene)
+	{
+		_scene1 = scene;
+	}
+
 	public void PlayTestLoops()
 	{
 		var loop1 = GD.Load<PackedScene>("res://prefabs/Loops/Kick01.tscn");
@@ -41,26 +46,38 @@ public partial class LoopManager : Control
 		AddChild(instance2);
 	}
 
-	public void SetLoops(string scene1, string scene2 = "",string scene3 = "",string scene4 = "")
+	public void _SetLoops(string scene1, string scene2 = null,string scene3 = null,string scene4 = null)
 	{
 		GD.Print($"Setting Loops");
 		var loop1 = GD.Load<PackedScene>($"res://prefabs/Loops/{scene1}.tscn");
 		ToPlay.Add(loop1);
 		GD.Print($"Added {loop1}");
-		var loop2 = GD.Load<PackedScene>($"res://prefabs/Loops/{scene2}.tscn");	
-		if (loop2 != null)
+		if(!string.IsNullOrEmpty(scene2))
 		{
- 			ToPlay.Add(loop2);
+			var loop2 = GD.Load<PackedScene>($"res://prefabs/Loops/{scene2}.tscn");	
+			if (loop2 != null)
+			{
+ 				ToPlay.Add(loop2);
+				GD.Print($"Added {loop2}");			
+			}
 		}
-		var loop3 = GD.Load<PackedScene>($"res://prefabs/Loops/{scene3}.tscn");	
-		if (loop3 != null)
+		if(!string.IsNullOrEmpty(scene3))
 		{
- 			ToPlay.Add(loop3);
+			var loop3 = GD.Load<PackedScene>($"res://prefabs/Loops/{scene3}.tscn");	
+			if (loop3 != null)
+			{
+ 				ToPlay.Add(loop3);
+				GD.Print($"Added {loop3}");
+			}
 		}
-		var loop4 = GD.Load<PackedScene>($"res://prefabs/Loops/{scene4}.tscn");	
-		if (loop3 != null)
+		if(!string.IsNullOrEmpty(scene4))
 		{
- 			ToPlay.Add(loop4);
+			var loop4 = GD.Load<PackedScene>($"res://prefabs/Loops/{scene4}.tscn");	
+			if (loop4 != null)
+			{
+ 				ToPlay.Add(loop4);
+				GD.Print($"Added {loop4}");
+			}
 		}
 	}
 
@@ -73,6 +90,11 @@ public partial class LoopManager : Control
 			AddChild(instance);
 			Playing.Add(instance);
 		}
+	}
+
+	public void _on_set_loops(string name)
+	{
+		GD.Print(name);
 	}
 
 }
