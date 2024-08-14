@@ -7,6 +7,8 @@ public partial class Loop : Node2D
 	public string ID {set;get;}
 	public AudioStreamPlayer AudioPlayer;
 	public AudioStreamOggVorbis Audio;
+	public string Instrument;
+	public string Key;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -26,11 +28,11 @@ public partial class Loop : Node2D
 	public void SetAudio(string id)
 	{	
 		AddChild(AudioPlayer);
-		string loopPath = $"res://assets/audio/loops/{id}.ogg";
+		string loopPath = $"res://assets/audio/loops/{Key}/{Instrument}/{id}.ogg";
 		Audio = (AudioStreamOggVorbis)ResourceLoader.Load(loopPath);
 		if(Audio == null)
 		{
-			GD.Print($"Failed to load audio: {id}.ogg");
+			GD.Print($"Failed to load audio: /assets/audio/loops/{Key}/{Instrument}/{id}.ogg");
 			
 		}
 		this.AudioPlayer.Stream = Audio;	
@@ -48,6 +50,16 @@ public partial class Loop : Node2D
 	public void SetLooping(bool setting)
 	{
 		Audio.Loop = setting;
+	}
+
+	public void SetKey(string key)
+	{
+		this.Key = key;
+	}
+
+	public void SetInstrument(string inst)
+	{
+		this.Instrument = inst;
 	}
 	
 }

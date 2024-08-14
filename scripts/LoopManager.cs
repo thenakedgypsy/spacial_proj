@@ -7,14 +7,16 @@ public partial class LoopManager : Control
 {
 	public List<PackedScene> ToPlay;
 	public List<Node> Playing;
-	private string _scene1 {get; set;}
-	private string _scene2 {get; set;}
-	private string _scene3 {get; set;}
-	private string _scene4 {get; set;}
+	private string _lead {get; set;}
+	private string _rythm {get; set;}
+	private string _bass {get; set;}
+	private string _drums {get; set;}
 	private float _syncTimer;
 	private float _currentTime;
 	private bool _syncing;
 	private bool _timerStarted;
+	private float _loopLength;
+	public string Key;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -32,8 +34,8 @@ public partial class LoopManager : Control
    		if (_syncing)
    		{
    		    var timeSinceSync = _currentTime - _syncTimer;
-			GD.Print($"Modulo: {Math.Abs(timeSinceSync % 8f)}");
-   		    if (timeSinceSync >= 8f && Math.Abs(timeSinceSync % 8f) <= 0.1f)
+			GD.Print($"Syncing Audio at {(int)_loopLength} :: {Math.Abs(timeSinceSync % _loopLength)}");
+   		    if (timeSinceSync >= 8f && Math.Abs(timeSinceSync % _loopLength) <= 0.012f)
    		    {
    		        OnSync();
    		    }
@@ -43,9 +45,11 @@ public partial class LoopManager : Control
 	public void Initialize()
 	{
 		_syncing = false;
+		_loopLength = 8f;
 		_timerStarted = false;
 		ToPlay = new List<PackedScene>();
-		Playing = new List<Node>();   		
+		Playing = new List<Node>();  
+		Key = "CmajAm";	
 	}
 
 	public void SetLoops(string scene1, string scene2 = null,string scene3 = null,string scene4 = null)
@@ -85,34 +89,34 @@ public partial class LoopManager : Control
 
 	public void SetLoops()
 	{
-		if(!string.IsNullOrEmpty(_scene1))
+		if(!string.IsNullOrEmpty(_lead))
 		{
 			GD.Print($"Setting Loops");
-			var loop1 = GD.Load<PackedScene>($"res://prefabs/Loops/{_scene1}.tscn");
+			var loop1 = GD.Load<PackedScene>($"res://prefabs/Loops/{Key}/Lead/{_lead}.tscn");
 			ToPlay.Add(loop1);
 			GD.Print($"Added {loop1}");
 		}
-		if(!string.IsNullOrEmpty(_scene2))
+		if(!string.IsNullOrEmpty(_rythm))
 		{
-			var loop2 = GD.Load<PackedScene>($"res://prefabs/Loops/{_scene2}.tscn");	
+			var loop2 = GD.Load<PackedScene>($"res://prefabs/Loops/{Key}/Rythm/{_rythm}.tscn");	
 			if (loop2 != null)
 			{
  				ToPlay.Add(loop2);
 				GD.Print($"Added {loop2}");			
 			}
 		}
-		if(!string.IsNullOrEmpty(_scene3))
+		if(!string.IsNullOrEmpty(_bass))
 		{
-			var loop3 = GD.Load<PackedScene>($"res://prefabs/Loops/{_scene3}.tscn");	
+			var loop3 = GD.Load<PackedScene>($"res://prefabs/Loops/{Key}/Bass/{_bass}.tscn");	
 			if (loop3 != null)
 			{
  				ToPlay.Add(loop3);
 				GD.Print($"Added {loop3}");
 			}
 		}
-		if(!string.IsNullOrEmpty(_scene4))
+		if(!string.IsNullOrEmpty(_drums))
 		{
-			var loop4 = GD.Load<PackedScene>($"res://prefabs/Loops/{_scene4}.tscn");	
+			var loop4 = GD.Load<PackedScene>($"res://prefabs/Loops/Drums/{_drums}.tscn");	
 			if (loop4 != null)
 			{
  				ToPlay.Add(loop4);
@@ -135,14 +139,22 @@ public partial class LoopManager : Control
 
 	public void PlayLoops()
 	{
+		
 	    SetLoops();
 	    GD.Print("Syncing Audio...");
+		
 	    if (!_timerStarted)
     	{
-        _syncTimer = _currentTime;
-        _timerStarted = true;
+        	_syncTimer = _currentTime;
+        	_timerStarted = true;
+			OnSync();
     	}
-		_syncing = true;
+		else
+		{
+			_syncing = true;
+		}
+
+		
 	}
 	private void OnSync()
 	{	
@@ -159,6 +171,7 @@ public partial class LoopManager : Control
 		{
 			Playing.Remove(node);
 			node.QueueFree();
+			
 		}
 	}
 
@@ -171,10 +184,10 @@ public partial class LoopManager : Control
 			ToPlay.Remove(scene);
 			GD.Print($"Removed {scene} from Queue.");
 		}
-		_scene1 = null;
-		_scene2 = null;
-		_scene3 = null;
-		_scene4 = null;
+		_lead = null;
+		_rythm = null;
+		_bass = null;
+		_drums = null;
 		GD.Print($"Cleared Scenes.");
 	}
 
@@ -182,23 +195,28 @@ public partial class LoopManager : Control
 	{
 		FreePlaying();
 		ClearQueue();
+		_timerStarted = false;
 	}
 
-	public void _SetLoop1(string loopName)
+	public void _SetLead(string loopName)
 	{
-		_scene1 = loopName;
+		GD.Print("Lead Chosen");
+		_lead = loopName;
 	}
-	public void _SetLoop2(string loopName)
+	public void _SetRythm(string loopName)
 	{
-		_scene2 = loopName;
+		GD.Print("Rythm Chosen");
+		_rythm = loopName;
 	}
-	public void _SetLoop3(string loopName)
+	public void _SetBass(string loopName)
 	{
-		_scene3 = loopName;
+		GD.Print("Bass Chosen");
+		_bass = loopName;
 	}
-	public void _SetLoop4(string loopName)
+	public void _SetDrums(string loopName)
 	{
-		_scene4 = loopName;
+		GD.Print("Drums Chosen");
+		_drums = loopName;
 	}
 
 	public void _on_set_loops(string name)

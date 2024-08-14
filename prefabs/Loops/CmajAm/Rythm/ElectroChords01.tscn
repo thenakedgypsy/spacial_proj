@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://gh5du5xk336y"]
+
+[ext_resource type="Script" path="res://scripts/Loop Scripts/CmajAm/Rythm/ElectroChords01.cs" id="1_bcd1a"]
+
+[node name="Loop" type="Node2D"]
+position = Vector2(429, 301)
+script = ExtResource("1_bcd1a")

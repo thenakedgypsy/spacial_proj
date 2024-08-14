@@ -1,14 +1,18 @@
 using Godot;
 using System;
 
-public partial class Kick01 : Loop
+public partial class TranceLead01 : Loop
 {
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		
 		Initialize();
-		base.SetAudio("Kick01");
+		base.ID = "TranceLead01";
+		base.Instrument = "Lead";
+		base.Key = "CmajAm";
+		base.SetAudio(base.ID);
 		base.SetLooping(true);
 		base.Play();
 	}
