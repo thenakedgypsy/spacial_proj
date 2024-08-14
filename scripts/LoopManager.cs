@@ -135,8 +135,6 @@ public partial class LoopManager : Control
 			Playing.Add(instance);
 		}
 	}
-
-
 	public void PlayLoops()
 	{
 		
@@ -158,12 +156,13 @@ public partial class LoopManager : Control
 	}
 	private void OnSync()
 	{	
+		
 		_syncing = false;
 		FreePlaying();
     	InstantiateLoops();
-    	ClearQueue();		
+    	ClearQueue();
+		GD.Print("=========== SYNCED!! ===========");		
 	}
-
 	public void FreePlaying()
 	{
 		List<Node> PlayingCopy = Playing.ToList();
@@ -174,7 +173,6 @@ public partial class LoopManager : Control
 			
 		}
 	}
-
 	public void ClearQueue()
 	{
 		List<PackedScene> ToPlayCopy = ToPlay.ToList();
@@ -188,7 +186,8 @@ public partial class LoopManager : Control
 		_rythm = null;
 		_bass = null;
 		_drums = null;
-		GD.Print($"Cleared Scenes.");
+		GD.Print($"Cleared Queued Loops.");
+		GD.Print($"=====================================");
 	}
 
 	public void Reset()
@@ -200,22 +199,22 @@ public partial class LoopManager : Control
 
 	public void _SetLead(string loopName)
 	{
-		GD.Print("Lead Chosen");
+		GD.Print("Lead added to queue");
 		_lead = loopName;
 	}
 	public void _SetRythm(string loopName)
 	{
-		GD.Print("Rythm Chosen");
+		GD.Print("Rythm added to queue");
 		_rythm = loopName;
 	}
 	public void _SetBass(string loopName)
 	{
-		GD.Print("Bass Chosen");
+		GD.Print("Bass added to queue");
 		_bass = loopName;
 	}
 	public void _SetDrums(string loopName)
 	{
-		GD.Print("Drums Chosen");
+		GD.Print("Drums added to queue");
 		_drums = loopName;
 	}
 

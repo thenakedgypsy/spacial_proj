@@ -12,58 +12,58 @@ offset_bottom = 40.0
 script = ExtResource("1_67487")
 
 [node name="Button" type="Button" parent="Control"]
-offset_left = 86.0
-offset_top = 146.0
-offset_right = 190.0
-offset_bottom = 177.0
+offset_left = 762.0
+offset_top = 574.0
+offset_right = 866.0
+offset_bottom = 605.0
 text = "PLAY LOOPS"
 
 [node name="Button5" type="Button" parent="Control"]
-offset_left = 87.0
-offset_top = 207.0
-offset_right = 191.0
-offset_bottom = 238.0
+offset_left = 1766.0
+offset_top = 128.0
+offset_right = 1870.0
+offset_bottom = 159.0
 text = "RESET ALL"
 
 [node name="Button6" type="Button" parent="Control"]
-offset_left = 252.0
-offset_top = 167.0
-offset_right = 367.0
-offset_bottom = 198.0
+offset_left = 1143.0
+offset_top = 461.0
+offset_right = 1258.0
+offset_bottom = 492.0
 text = "CLEAR QUEUE"
 
-[node name="SYNTH" type="Button" parent="Control"]
-offset_left = 291.0
-offset_top = 35.0
-offset_right = 355.0
-offset_bottom = 66.0
+[node name="RYTHM" type="Button" parent="Control"]
+offset_left = 704.0
+offset_top = 457.0
+offset_right = 768.0
+offset_bottom = 488.0
 text = "RYTHM"
 
 [node name="LEAD" type="Button" parent="Control"]
-offset_left = 39.0
-offset_top = 33.0
-offset_right = 103.0
-offset_bottom = 64.0
+offset_left = 614.0
+offset_top = 455.0
+offset_right = 678.0
+offset_bottom = 486.0
 text = "LEAD"
 
 [node name="DRUMS" type="Button" parent="Control"]
-offset_left = 120.0
-offset_top = 34.0
-offset_right = 186.0
-offset_bottom = 65.0
+offset_left = 946.0
+offset_top = 459.0
+offset_right = 1012.0
+offset_bottom = 490.0
 text = "DRUMS"
 
 [node name="BASS" type="Button" parent="Control"]
-offset_left = 208.0
-offset_top = 34.0
-offset_right = 268.0
-offset_bottom = 65.0
+offset_left = 821.0
+offset_top = 459.0
+offset_right = 881.0
+offset_bottom = 490.0
 text = "BASS"
 
 [connection signal="pressed" from="Control/Button" to="Control" method="PlayLoops"]
 [connection signal="pressed" from="Control/Button5" to="Control" method="Reset"]
 [connection signal="pressed" from="Control/Button6" to="Control" method="ClearQueue"]
-[connection signal="pressed" from="Control/SYNTH" to="Control" method="_SetRythm" binds= ["ElectroChords01"]]
+[connection signal="pressed" from="Control/RYTHM" to="Control" method="_SetRythm" binds= ["ElectroChords01"]]
 [connection signal="pressed" from="Control/LEAD" to="Control" method="_SetLead" binds= ["TranceLead01"]]
 [connection signal="pressed" from="Control/DRUMS" to="Control" method="_SetDrums" binds= ["TechnoDrums01"]]
 [connection signal="pressed" from="Control/BASS" to="Control" method="_SetBass" binds= ["DarkBass01"]]
