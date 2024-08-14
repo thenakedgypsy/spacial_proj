@@ -14,6 +14,7 @@ public partial class NPC : Area2D
 	public RichTextLabel Dialogue;					
 	public int CurrentLoopPoint; //so we can just loop back to the last item of key text 
 	private bool _bubbleUnfolded;
+	public int LoopPointsSeen;
 
 	public override void _Ready()
 	{
@@ -31,6 +32,7 @@ public partial class NPC : Area2D
 		CurrentLoopPoint = 0;
 		DialogueList = new List<(string,bool)>();
 		_bubbleUnfolded = true;
+		LoopPointsSeen = 0;
 	}
 
 	public override void _Process(double delta)
@@ -114,12 +116,14 @@ public partial class NPC : Area2D
 		{	
 			CurrentLoopPoint = currentDialogue;
 			GD.Print($"New Loop Point: {CurrentLoopPoint}!");
+			LoopPointsSeen++;
+			GD.Print($"Loop Points Seen: {LoopPointsSeen}");
 		}
 		BumpDialogue();
 
 	}
 
-	public void AddDialogue((string text, bool isKey) dialogue)
+	public void AddDialogue((string text, bool isLoopPoint) dialogue)
 	{
 		DialogueList.Add(dialogue);
 	}
@@ -147,7 +151,7 @@ public partial class NPC : Area2D
    		}
 	}
 
-	public int GetKeyReached()
+	public int GetCurrentLoopPoint()
 	{
 		return this.CurrentLoopPoint;
 	}
@@ -170,6 +174,11 @@ public partial class NPC : Area2D
 		{
 			this.CurrentLoopPoint++;
 		}
+	}
+
+	public int GetLoopsSeen()
+	{
+		return this.LoopPointsSeen;
 	}
 
 }

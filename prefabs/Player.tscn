@@ -1,6 +1,6 @@
 [gd_scene load_steps=26 format=3 uid="uid://fq6q0sonfrep"]
 
-[ext_resource type="Texture2D" uid="uid://t0udso2qm2sa" path="res://assets/Chibi-character-template_skin1_part2_by_AxulArt.png" id="1_krnt0"]
+[ext_resource type="Texture2D" uid="uid://t0udso2qm2sa" path="res://assets/audio/sprites/Chibi-character-template_skin1_part2_by_AxulArt.png" id="1_krnt0"]
 [ext_resource type="Script" path="res://scripts/Player.cs" id="1_nwo5m"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wwuc3"]

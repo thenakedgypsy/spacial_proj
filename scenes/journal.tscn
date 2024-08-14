@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bx7v5eemgahi6"]
 
-[ext_resource type="Texture2D" uid="uid://dlytjjbtf4qki" path="res://assets/menuback1.png" id="1_dxdeu"]
+[ext_resource type="Texture2D" uid="uid://dlytjjbtf4qki" path="res://assets/audio/sprites/menuback1.png" id="1_dxdeu"]
 
 [node name="Journal" type="Control"]
 layout_mode = 3
