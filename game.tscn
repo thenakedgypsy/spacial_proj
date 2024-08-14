@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://fq6q0sonfrep" path="res://prefabs/Player.tscn" id="1_56txp"]
 [ext_resource type="Texture2D" uid="uid://b1h1qdfm05la6" path="res://assets/audio/sprites/TileSet v1.0.png" id="2_07fwi"]
-[ext_resource type="PackedScene" uid="uid://4gl4rc3qctuu" path="res://prefabs/NPCTemplate.tscn" id="3_6fmug"]
+[ext_resource type="PackedScene" uid="uid://4gl4rc3qctuu" path="res://prefabs/NPCs/NPCTemplate.tscn" id="3_6fmug"]
 [ext_resource type="PackedScene" uid="uid://dp3u5gh40l7xe" path="res://prefabs/NPCs/Gerald.tscn" id="4_jdkbl"]
 [ext_resource type="PackedScene" uid="uid://da0458au6p4db" path="res://prefabs/NPCs/Arnold.tscn" id="5_embmr"]
 

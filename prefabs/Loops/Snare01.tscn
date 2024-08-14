@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ces2n0tng8y58"]
 
-[ext_resource type="Script" path="res://scripts/Snare01.cs" id="1_tsryn"]
+[ext_resource type="Script" path="res://scripts/Loop Scripts/Snare01.cs" id="1_tsryn"]
 
 [node name="Loop" type="Node2D"]
 position = Vector2(429, 301)

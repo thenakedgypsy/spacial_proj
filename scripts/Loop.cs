@@ -40,7 +40,7 @@ public partial class Loop : Node2D
 	{
 		if(Audio != null)
 		{
-			GD.Print("Attempting to play audio");
+			GD.Print($"Attempting to play audio from {this}");
 			this.AudioPlayer.Play();
 		}
 	}

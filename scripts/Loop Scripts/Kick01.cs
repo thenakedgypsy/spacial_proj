@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class LoopTemplate : Loop
+public partial class Kick01 : Loop
 {
 
 	// Called when the node enters the scene tree for the first time.

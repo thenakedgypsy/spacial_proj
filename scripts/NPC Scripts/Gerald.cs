@@ -5,10 +5,12 @@ using System.ComponentModel;
 public partial class Gerald : NPC
 {
 	private bool _chattedToGerald;
+	private bool _chattedToArnold;
 	public override void _Ready()
 	{
 		base.Initialize();
 		_chattedToGerald = false;
+		_chattedToArnold = false;
 		base.AddDialogue(("Hello, My name is Gerald!", false)); 
 		base.AddDialogue(("I'll let you in on a secret... I'm different these two...", false));
 		base.AddDialogue(("You see, they are just templates for people.", false));
@@ -35,6 +37,17 @@ public partial class Gerald : NPC
 			{
 				_chattedToGerald = true;
 				TriggerManager.Instance.ChattedToGerald = true;
+			}
+		}
+		if(!_chattedToArnold)
+		{
+			if(TriggerManager.Instance.ChattedToArnold)
+			{
+				_chattedToArnold = true;
+				base.AddDialogue(("Nice one, you talked to Arnold.", false));
+				base.BumpLoopPoint();
+				base.BumpLoopPoint();
+				base.AddDialogue(("Now we can all get on with our lives.", true));
 			}
 		}
         

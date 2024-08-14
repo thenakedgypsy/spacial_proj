@@ -5,10 +5,12 @@ public partial class Arnold : NPC
 {
 
 private bool _chattedToGerald;
+private bool _chattedToArnold;
 	public override void _Ready()
 	{
 		base.Initialize();
 		_chattedToGerald = false;
+		_chattedToArnold = false;
 		//requires a triggered event to talk more
 		//add dialogue like below. Key points will need adding to the list, keypoints will start the looped dialogue
 		//again from the line after them. 
@@ -22,11 +24,20 @@ private bool _chattedToGerald;
 		{
 			if(TriggerManager.Instance.ChattedToGerald) //checking the event was -> EventManager.CheckTrigger("ChattedToGerald")
 			{
-
 				ChattedToGerald();
 			}
 		}
-        base._Process(delta);
+		if(!_chattedToArnold)
+		{
+			if(base.GetLoopsSeen() == 1)
+			{
+				_chattedToArnold = true;
+				TriggerManager.Instance.ChattedToArnold = true;
+
+			}
+		}
+        
+		base._Process(delta);
     }
 	
 	public void ChattedToGerald()

@@ -1,7 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://bvb712l87ogj7"]
 
-[ext_resource type="Script" path="res://scripts/LoopTemplate.cs" id="1_5avpt"]
+[ext_resource type="Script" path="res://scripts/Loop Scripts/Kick01.cs" id="1_muego"]
 
 [node name="Loop" type="Node2D"]
 position = Vector2(5, 1)
-script = ExtResource("1_5avpt")
+script = ExtResource("1_muego")

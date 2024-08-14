@@ -114,10 +114,14 @@ public partial class NPC : Area2D
 		GD.Print($"Current Loop Point {CurrentLoopPoint} / Total Dialogue: {DialogueList.Count -1 }");
 		if(DialogueList[currentDialogue].Item2) //if is set as a loop point
 		{	
+			int previousLoopPoint = CurrentLoopPoint;
 			CurrentLoopPoint = currentDialogue;
 			GD.Print($"New Loop Point: {CurrentLoopPoint}!");
+			if(previousLoopPoint < CurrentLoopPoint)
+			{
 			LoopPointsSeen++;
-			GD.Print($"Loop Points Seen: {LoopPointsSeen}");
+			GD.Print($"Number of New Loop Points Seen: {LoopPointsSeen}");
+			}
 		}
 		BumpDialogue();
 
@@ -132,7 +136,7 @@ public partial class NPC : Area2D
 	{
 		ChatBubble.Animation = "unfold";
 		ChatBubble.Play();
-		GD.Print($"Bubble status {ChatBubble.Animation}");
+		//GD.Print($"Bubble status {ChatBubble.Animation}");
 	}
 
 	public void FoldChatBubble()
@@ -140,7 +144,7 @@ public partial class NPC : Area2D
 		ChatBubble.Animation = "fold";
 		ChatBubble.Play();
 		Dialogue.Visible = false;
-		GD.Print($"Bubble status {ChatBubble.Animation}");
+		//GD.Print($"Bubble status {ChatBubble.Animation}");
 	}
 
 	public void BubbleAnimationFinished()
