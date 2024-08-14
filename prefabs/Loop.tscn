@@ -1,8 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dgebak2qwvth5"]
 
-[ext_resource type="Script" path="res://Loop.cs" id="1_vg6jw"]
+[ext_resource type="Script" path="res://scripts/LoopTemplate.cs" id="1_fa4iv"]
 
 [node name="Loop" type="Node2D"]
-script = ExtResource("1_vg6jw")
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+script = ExtResource("1_fa4iv")
