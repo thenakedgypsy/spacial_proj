@@ -15,12 +15,18 @@ public partial class LoopBank : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		_selector = GetNode<OptionButton>("Button/Selector");
-		LoopsKnown = new Dictionary<string, string>();
+		Initialize();
 
 		AddLoop("TranceLead01","Raver Alert");  //test adds
 		AddLoop("MysticLead01","Mysterious Plucker"); //test adds
 		PopulateSelector();
+
+	}
+
+	public void Initialize()
+	{
+		_selector = GetNode<OptionButton>("Button/Selector");
+		LoopsKnown = new Dictionary<string, string>();
 
 	}
 
@@ -74,8 +80,10 @@ public partial class LoopBank : Node2D
 		string loopName = _selector.GetItemText(index);
 		string loopID = GetID(loopName);
 		GD.Print($"Signal Emitted for Loop: {loopID}");
-		EmitSignal(nameof(LoopSelected), loopID);
+		EmitSignal(nameof(LoopSelected), loopID, loopName);
 	}
+
+	
 
 
 }

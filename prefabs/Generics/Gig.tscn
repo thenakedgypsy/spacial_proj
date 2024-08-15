@@ -9,22 +9,23 @@
 [node name="Gig" type="Node2D"]
 
 [node name="Loop Manager" parent="." instance=ExtResource("1_dpdpw")]
-offset_left = -67.0
-offset_top = 94.0
-offset_right = -27.0
-offset_bottom = 134.0
+offset_left = 4.0
+offset_top = 3.0
+offset_right = 44.0
+offset_bottom = 43.0
 
 [node name="Loop Bank" parent="." instance=ExtResource("2_jp6e3")]
-position = Vector2(427, 276)
+position = Vector2(1058, 849)
+scale = Vector2(1, 0.995833)
 
 [node name="Loop Bank2" parent="." instance=ExtResource("3_j8je6")]
-position = Vector2(617, 279)
+position = Vector2(1371, 851)
 
 [node name="Loop Bank3" parent="." instance=ExtResource("5_71k8p")]
-position = Vector2(251, 276)
+position = Vector2(389, 852)
 
 [node name="Loop Bank4" parent="." instance=ExtResource("4_ukcxx")]
-position = Vector2(790, 279)
+position = Vector2(717, 848)
 
 [connection signal="LoopSelected" from="Loop Bank" to="Loop Manager" method="_SetBass"]
 [connection signal="LoopSelected" from="Loop Bank2" to="Loop Manager" method="_SetDrums"]

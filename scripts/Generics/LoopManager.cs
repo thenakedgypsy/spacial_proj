@@ -17,6 +17,8 @@ public partial class LoopManager : Control
 	private bool _timerStarted;
 	private float _loopLength;
 	public string Key;
+	private bool _queueWaitingForSync;
+	private Button _syncButton;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -30,22 +32,38 @@ public partial class LoopManager : Control
 	public override void _Process(double delta)
 	{
    		_currentTime += (float)delta;
+		
+		
 		Sync();
+		FlipSyncButton();
+		
+	}
 
+	public void FlipSyncButton()
+	{
+		if(_syncing)
+		{
+			_syncButton.Disabled = true;
+		}
+		else
+		{
+			_syncButton.Disabled = false;
+		}
 
 	}
 
 	public void Sync()
 	{
-		if (_syncing) //sync checker
-   		{
-   		    var timeSinceSync = _currentTime - _syncTimer;
+		if(_syncing)
+		{
+   			var timeSinceSync = _currentTime - _syncTimer;
 			GD.Print($"Syncing Audio at {(int)_loopLength} :: {Math.Abs(timeSinceSync % _loopLength)}");
-   		    if (timeSinceSync >= 8f && Math.Abs(timeSinceSync % _loopLength) <= 0.012f)
-   		    {
-   		        OnSync();
-   		    }
-    	}
+   			if (timeSinceSync >= 8f && Math.Abs(timeSinceSync % _loopLength) <= 0.012f)
+   			{
+   			    OnSync();
+   			}
+		}
+
 	}
 
 
@@ -57,6 +75,7 @@ public partial class LoopManager : Control
 		ToPlay = new List<PackedScene>();
 		Playing = new List<Node>();  
 		Key = "CmajAm";	
+		_syncButton = GetNode<Button>("Sync");
 	}
 	public void SetLoops()
 	{
@@ -127,8 +146,10 @@ public partial class LoopManager : Control
 	}
 	public void PlayLoops()
 	{
-		
+		if(!_syncing)
+		{
 	    SetLoops();
+		}
 	    GD.Print("Syncing Audio...");
 		
 	    if (!_timerStarted)
@@ -187,29 +208,26 @@ public partial class LoopManager : Control
 		_timerStarted = false;
 	}
 
-	public void _SetLead(string loopName)
+	public void _SetLead(string loopID, string loopName)
 	{
-		GD.Print("Lead added to queue");
-		_lead = loopName;
+		GD.Print($"Lead Loop: {loopName} added to queue");
+		_lead = loopID;
 	}
-	public void _SetRythm(string loopName)
+	public void _SetRythm(string loopID, string loopName)
 	{
-		GD.Print("Rythm added to queue");
-		_rythm = loopName;
+		GD.Print($"Rythm Loop: {loopName} added to queue");
+		_rythm = loopID;
 	}
-	public void _SetBass(string loopName)
+	public void _SetBass(string loopID, string loopName)
 	{
-		GD.Print("Bass added to queue");
-		_bass = loopName;
+		GD.Print($"Bass Loop: {loopName} added to queue");
+		_bass = loopID;
 	}
-	public void _SetDrums(string loopName)
+	public void _SetDrums(string loopID, string loopName)
 	{
-		GD.Print("Drums added to queue");
-		_drums = loopName;
+		GD.Print($"Drum Loop: {loopName} added to queue");
+		_drums = loopID;
 	}
-	public void _on_set_loops(string name)
-	{
-		GD.Print(name);
-	}
+
 
 }
