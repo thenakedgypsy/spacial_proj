@@ -1,9 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://dnls68iog83du"]
+[gd_scene load_steps=2 format=3 uid="uid://dxtjkw0eaqsoo"]
 
-[ext_resource type="Script" path="res://scripts/Generics/LoopBank.cs" id="1_x6m6v"]
+[ext_resource type="Script" path="res://scripts/TestBanks/LeadBank.cs" id="1_6kocy"]
 
 [node name="Loop Bank" type="Node2D"]
-script = ExtResource("1_x6m6v")
+script = ExtResource("1_6kocy")
 
 [node name="Button" type="Button" parent="."]
 offset_left = 339.0
@@ -13,6 +13,7 @@ offset_bottom = 280.0
 text = "Queue Lead"
 
 [node name="Selector" type="OptionButton" parent="Button"]
+layout_mode = 0
 offset_left = -29.0
 offset_top = -31.0
 offset_right = 135.0

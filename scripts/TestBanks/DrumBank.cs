@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-public partial class LoopBank : Node2D
+public partial class DrumBank : Node2D
 {
 	public Dictionary<string,string> LoopsKnown;
 	private OptionButton _selector;
@@ -18,8 +18,7 @@ public partial class LoopBank : Node2D
 		_selector = GetNode<OptionButton>("Button/Selector");
 		LoopsKnown = new Dictionary<string, string>();
 
-		AddLoop("TranceLead01","Raver Alert");  //test adds
-		AddLoop("MysticLead01","Mysterious Plucker"); //test adds
+		AddLoop("TechnoDrums01","Four to the Floor");  //test adds
 		PopulateSelector();
 
 	}

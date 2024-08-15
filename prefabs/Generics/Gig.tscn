@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://l5sr7wmey37q"]
 
 [ext_resource type="PackedScene" uid="uid://ih5wwvnjhpwb" path="res://prefabs/Generics/LoopManager.tscn" id="1_dpdpw"]
-[ext_resource type="PackedScene" uid="uid://cegmvdtcc5u3y" path="res://prefabs/TestBanks/BassBank.tscn" id="2_jp6e3"]
-[ext_resource type="PackedScene" uid="uid://e73obegl0eq0" path="res://prefabs/TestBanks/DrumBank.tscn" id="3_j8je6"]
-[ext_resource type="PackedScene" uid="uid://72fk8lk8ovmj" path="res://prefabs/TestBanks/RythmBank.tscn" id="4_ukcxx"]
-[ext_resource type="PackedScene" uid="uid://bnx7gvbl18of1" path="res://prefabs/TestBanks/LeadBank.tscn" id="5_71k8p"]
+[ext_resource type="PackedScene" uid="uid://361yhq6wmyyc" path="res://prefabs/TestBanks/BassBank.tscn" id="2_jp6e3"]
+[ext_resource type="PackedScene" uid="uid://s2a11x1k4mx7" path="res://prefabs/TestBanks/DrumBank.tscn" id="3_j8je6"]
+[ext_resource type="PackedScene" uid="uid://c8rg7juessyb0" path="res://prefabs/TestBanks/RythmBank.tscn" id="4_ukcxx"]
+[ext_resource type="PackedScene" uid="uid://dxtjkw0eaqsoo" path="res://prefabs/TestBanks/LeadBank.tscn" id="5_71k8p"]
 
 [node name="Gig" type="Node2D"]
 
@@ -14,19 +14,19 @@ offset_top = 94.0
 offset_right = -27.0
 offset_bottom = 134.0
 
-[node name="Bass Bank" parent="." instance=ExtResource("2_jp6e3")]
-position = Vector2(703, 279)
+[node name="Loop Bank" parent="." instance=ExtResource("2_jp6e3")]
+position = Vector2(427, 276)
 
-[node name="DrumBank" parent="." instance=ExtResource("3_j8je6")]
-position = Vector2(913, 280)
+[node name="Loop Bank2" parent="." instance=ExtResource("3_j8je6")]
+position = Vector2(617, 279)
 
-[node name="RythmBank" parent="." instance=ExtResource("4_ukcxx")]
-position = Vector2(463, 279)
+[node name="Loop Bank3" parent="." instance=ExtResource("5_71k8p")]
+position = Vector2(251, 276)
 
-[node name="LeadBank" parent="." instance=ExtResource("5_71k8p")]
-position = Vector2(236, 278)
+[node name="Loop Bank4" parent="." instance=ExtResource("4_ukcxx")]
+position = Vector2(790, 279)
 
-[connection signal="LoopSelected" from="Bass Bank" to="Loop Manager" method="_SetBass"]
-[connection signal="LoopSelected" from="DrumBank" to="Loop Manager" method="_SetDrums"]
-[connection signal="LoopSelected" from="RythmBank" to="Loop Manager" method="_SetRythm"]
-[connection signal="LoopSelected" from="LeadBank" to="Loop Manager" method="_SetLead"]
+[connection signal="LoopSelected" from="Loop Bank" to="Loop Manager" method="_SetBass"]
+[connection signal="LoopSelected" from="Loop Bank2" to="Loop Manager" method="_SetDrums"]
+[connection signal="LoopSelected" from="Loop Bank3" to="Loop Manager" method="_SetLead"]
+[connection signal="LoopSelected" from="Loop Bank4" to="Loop Manager" method="_SetRythm"]

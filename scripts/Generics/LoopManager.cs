@@ -30,8 +30,14 @@ public partial class LoopManager : Control
 	public override void _Process(double delta)
 	{
    		_currentTime += (float)delta;
+		Sync();
 
-   		if (_syncing)
+
+	}
+
+	public void Sync()
+	{
+		if (_syncing) //sync checker
    		{
    		    var timeSinceSync = _currentTime - _syncTimer;
 			GD.Print($"Syncing Audio at {(int)_loopLength} :: {Math.Abs(timeSinceSync % _loopLength)}");
@@ -42,6 +48,7 @@ public partial class LoopManager : Control
     	}
 	}
 
+
 	public void Initialize()
 	{
 		_syncing = false;
@@ -51,50 +58,21 @@ public partial class LoopManager : Control
 		Playing = new List<Node>();  
 		Key = "CmajAm";	
 	}
-
-	public void SetLoops(string scene1, string scene2 = null,string scene3 = null,string scene4 = null)
-	{
-		GD.Print($"Setting Loops");
-		var loop1 = GD.Load<PackedScene>($"res://prefabs/Loops/{scene1}.tscn");
-		ToPlay.Add(loop1);
-		GD.Print($"Added {loop1}");
-		if(!string.IsNullOrEmpty(scene2))
-		{
-			var loop2 = GD.Load<PackedScene>($"res://prefabs/Loops/{scene2}.tscn");	
-			if (loop2 != null)
-			{
- 				ToPlay.Add(loop2);
-				GD.Print($"Added {loop2}");			
-			}
-		}
-		if(!string.IsNullOrEmpty(scene3))
-		{
-			var loop3 = GD.Load<PackedScene>($"res://prefabs/Loops/{scene3}.tscn");	
-			if (loop3 != null)
-			{
- 				ToPlay.Add(loop3);
-				GD.Print($"Added {loop3}");
-			}
-		}
-		if(!string.IsNullOrEmpty(scene4))
-		{
-			var loop4 = GD.Load<PackedScene>($"res://prefabs/Loops/{scene4}.tscn");	
-			if (loop4 != null)
-			{
- 				ToPlay.Add(loop4);
-				GD.Print($"Added {loop4}");
-			}
-		}
-	}
-
 	public void SetLoops()
 	{
 		if(!string.IsNullOrEmpty(_lead))
 		{
 			GD.Print($"Setting Loops");
 			var loop1 = GD.Load<PackedScene>($"res://prefabs/Loops/{Key}/Lead/{_lead}.tscn");
-			ToPlay.Add(loop1);
-			GD.Print($"Added {loop1}");
+			if(loop1 != null)
+			{
+				ToPlay.Add(loop1);
+				GD.Print($"Added {loop1}");
+			}
+			else
+			{
+				GD.Print($"Loop Scene at res://prefabs/Loops/{Key}/Lead/{_lead}.tscn - does not exist");
+			}
 		}
 		if(!string.IsNullOrEmpty(_rythm))
 		{
@@ -103,6 +81,10 @@ public partial class LoopManager : Control
 			{
  				ToPlay.Add(loop2);
 				GD.Print($"Added {loop2}");			
+			}
+			else
+			{
+				GD.Print($"Loop Scene at res://prefabs/Loops/{Key}/Rythm/{_rythm}.tscn - does not exist");
 			}
 		}
 		if(!string.IsNullOrEmpty(_bass))
@@ -113,6 +95,10 @@ public partial class LoopManager : Control
  				ToPlay.Add(loop3);
 				GD.Print($"Added {loop3}");
 			}
+			else
+			{
+				GD.Print($"Loop Scene at res://prefabs/Loops/{Key}/Bass/{_bass}.tscn - does not exist");
+			}
 		}
 		if(!string.IsNullOrEmpty(_drums))
 		{
@@ -121,6 +107,10 @@ public partial class LoopManager : Control
 			{
  				ToPlay.Add(loop4);
 				GD.Print($"Added {loop4}");
+			}
+			else
+			{
+				GD.Print($"Loop Scene at res://prefabs/Loops/drums/{_drums}.tscn - does not exist");
 			}
 		}
 	}

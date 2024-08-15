@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-public partial class LoopBank : Node2D
+public partial class LeadBank : Node2D
 {
 	public Dictionary<string,string> LoopsKnown;
 	private OptionButton _selector;
