@@ -18,7 +18,7 @@ public partial class Gerald : NPC
 		base.AddDialogue(("A trigger when I finish speaking, and...", false));
 		base.AddDialogue(("TWO LOOPING DIALOGUE POINTS!!", false));
 		
-		base.AddDialogue(("Just by seeing that....", true)); //1
+		base.AddDialogue(("Just by seeing THIS....", true)); //1
 		base.AddDialogue(("I should stop saying those same things if you walk away from me...", false));
 		base.AddDialogue(("and instead say THESE things!", false));
 		base.AddDialogue(("I'm moving on now...", false));

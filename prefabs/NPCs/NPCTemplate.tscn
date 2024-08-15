@@ -5,3 +5,6 @@
 
 [node name="NPC" instance=ExtResource("1_7hyct")]
 script = ExtResource("2_66o8x")
+
+[node name="ChatBubble" parent="." index="3"]
+z_index = 5

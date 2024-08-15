@@ -1,13 +1,97 @@
-[gd_scene load_steps=3 format=3 uid="uid://dp3u5gh40l7xe"]
+[gd_scene load_steps=9 format=3 uid="uid://dp3u5gh40l7xe"]
 
 [ext_resource type="PackedScene" uid="uid://4gl4rc3qctuu" path="res://prefabs/NPCs/NPCTemplate.tscn" id="1_kgr4p"]
 [ext_resource type="Script" path="res://scripts/NPC Scripts/Gerald.cs" id="2_cylvr"]
+[ext_resource type="Texture2D" uid="uid://ut020y3kuvp" path="res://assets/sprites/street characters/oldman1.png" id="3_g23se"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_161fv"]
+atlas = ExtResource("3_g23se")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4a3x6"]
+atlas = ExtResource("3_g23se")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k183e"]
+atlas = ExtResource("3_g23se")
+region = Rect2(64, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bkchc"]
+atlas = ExtResource("3_g23se")
+region = Rect2(64, 64, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4feyo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_161fv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4a3x6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_161fv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_161fv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4a3x6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_161fv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_161fv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_161fv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k183e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k183e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_161fv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4a3x6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_161fv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4a3x6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_161fv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bkchc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bkchc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_161fv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
 
 [node name="NPC" instance=ExtResource("1_kgr4p")]
 script = ExtResource("2_cylvr")
 
+[node name="AnimatedSprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_4feyo")
+autoplay = "default"
+frame_progress = 0.715172
+
 [node name="ChatBubble" parent="." index="3"]
-z_index = 0
+z_index = 2
 position = Vector2(-2.38419e-07, -29)
 animation = &"unfold"
 frame_progress = 0.0
