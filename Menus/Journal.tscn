@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bx7v5eemgahi6"]
 
-[ext_resource type="Texture2D" uid="uid://dlytjjbtf4qki" path="res://assets/audio/sprites/menuback1.png" id="1_dxdeu"]
+[ext_resource type="Texture2D" uid="uid://dlytjjbtf4qki" path="res://assets/sprites/menuback1.png" id="1_5wows"]
 
 [node name="Journal" type="Control"]
 layout_mode = 3
@@ -16,7 +16,7 @@ layout_mode = 1
 offset_right = 1920.0
 offset_bottom = 1080.0
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_dxdeu")
+texture = ExtResource("1_5wows")
 
 [node name="TopRight" type="TextureRect" parent="."]
 z_index = 1
@@ -29,7 +29,7 @@ offset_right = 957.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_dxdeu")
+texture = ExtResource("1_5wows")
 
 [node name="BottomLeft" type="TextureRect" parent="."]
 z_index = 1
@@ -38,7 +38,7 @@ offset_top = 537.0
 offset_right = 1920.0
 offset_bottom = 1617.0
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_dxdeu")
+texture = ExtResource("1_5wows")
 
 [node name="BottomRight" type="TextureRect" parent="."]
 z_index = 1
@@ -53,7 +53,7 @@ offset_bottom = 537.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_dxdeu")
+texture = ExtResource("1_5wows")
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 1
@@ -62,4 +62,4 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_dxdeu")
+texture = ExtResource("1_5wows")

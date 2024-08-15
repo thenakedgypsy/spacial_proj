@@ -10,6 +10,7 @@ public partial class TechnoDrums01 : Loop
 		
 		Initialize();
 		base.ID = "TechnoDrums01";
+		base.Name = "Techno Drums Full - 01";
 		base.Instrument = "Drums";
 		base.Key = "Drums";
 		base.SetAudio(base.ID);

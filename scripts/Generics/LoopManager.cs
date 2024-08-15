@@ -217,7 +217,6 @@ public partial class LoopManager : Control
 		GD.Print("Drums added to queue");
 		_drums = loopName;
 	}
-
 	public void _on_set_loops(string name)
 	{
 		GD.Print(name);

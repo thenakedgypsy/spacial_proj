@@ -87,8 +87,11 @@ public partial class NPC : Area2D
 		if(body is Player)
 		{
       		_isTalking = false;
-      		_bubbleUnfolded = false;  // Ensure the flag is reset
-      		FoldChatBubble(); 
+			if(_bubbleUnfolded)
+			{
+      			_bubbleUnfolded = false;  // Ensure the flag is reset
+      			FoldChatBubble(); 
+			}
       		Dialogue.Visible = false;
 			if(CurrentLoopPoint > 0)
 			{

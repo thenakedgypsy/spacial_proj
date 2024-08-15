@@ -10,6 +10,7 @@ public partial class TranceLead01 : Loop
 		
 		Initialize();
 		base.ID = "TranceLead01";
+		base.Name = "Trance Siren Lead";
 		base.Instrument = "Lead";
 		base.Key = "CmajAm";
 		base.SetAudio(base.ID);

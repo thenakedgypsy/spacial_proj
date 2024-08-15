@@ -3,7 +3,7 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
-	public const float Speed = 110.0f;
+	public const float Speed = 90.0f;
 	private AnimatedSprite2D _sprite;
 
     public override void _Ready()

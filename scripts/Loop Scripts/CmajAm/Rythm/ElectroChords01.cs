@@ -10,6 +10,7 @@ public partial class ElectroChords01 : Loop
 		
 		Initialize();
 		base.ID = "ElectroChords01";
+		base.Name = "Arp Electro Chord Voices";
 		base.Instrument = "Rythm";
 		base.Key = "CmajAm";
 		base.SetAudio(base.ID);

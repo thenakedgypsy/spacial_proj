@@ -10,6 +10,7 @@ public partial class DarkBass01 : Loop
 		
 		Initialize();
 		base.ID = "DarkBass01";
+		base.Name = "Dark Electro Sliding Bass";
 		base.Instrument = "Bass";
 		base.Key = "CmajAm";
 		base.SetAudio(base.ID);

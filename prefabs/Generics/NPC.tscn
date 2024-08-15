@@ -1,8 +1,8 @@
 [gd_scene load_steps=24 format=3 uid="uid://c3eiflikb4tin"]
 
-[ext_resource type="Script" path="res://scripts/NPC.cs" id="1_6cvrf"]
-[ext_resource type="Texture2D" uid="uid://t0udso2qm2sa" path="res://assets/audio/sprites/Chibi-character-template_skin1_part2_by_AxulArt.png" id="2_hs67k"]
-[ext_resource type="Texture2D" uid="uid://ctpqbivfv7vx4" path="res://assets/audio/sprites/bubbleanim.png" id="3_66e6t"]
+[ext_resource type="Script" path="res://scripts/Generics/NPC.cs" id="1_6cvrf"]
+[ext_resource type="Texture2D" uid="uid://t0udso2qm2sa" path="res://assets/sprites/Chibi-character-template_skin1_part2_by_AxulArt.png" id="2_hs67k"]
+[ext_resource type="Texture2D" uid="uid://ctpqbivfv7vx4" path="res://assets/sprites/bubbleanim.png" id="3_66e6t"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q7g7i"]
 atlas = ExtResource("2_hs67k")
