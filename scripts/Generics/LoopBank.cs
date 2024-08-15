@@ -5,12 +5,20 @@ using System.Collections.Generic;
 public partial class LoopBank : Node2D
 {
 	public Dictionary<string,string> LoopsKnown;
+	private OptionButton _selector;
+
+	[Signal]
+    public delegate void LoopSelectedEventHandler(string id);
+
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		_selector = GetNode<OptionButton>("Selector");
 		LoopsKnown = new Dictionary<string, string>();
 
 		AddLoop("TranceLead01","Raver Alert");
+		AddLoop("MysticLead01","Mysterious Plucker");
 		PopulateSelector();
 
 	}
@@ -28,10 +36,10 @@ public partial class LoopBank : Node2D
 
 	public void PopulateSelector()
 	{
-		OptionButton selector = GetNode<OptionButton>("Selector");
+		
 		foreach(string name in LoopsKnown.Keys)
 		{
-			selector.AddItem(name);
+			_selector.AddItem(name);
 			GD.Print($"Added {name} to selector");
 		}	
 	}
@@ -48,4 +56,24 @@ public partial class LoopBank : Node2D
 		GD.Print($"ID for {searchedName} missing from Loopbank: {this}");
 		return null;
 	}
+
+	public void HideSelector()
+	{	
+		_selector.Visible = false;
+	}
+		public void ShowSelector()
+	{
+		
+		_selector.Visible = true;
+	}
+
+	public void Selected(int index)
+	{
+		string loopName = _selector.GetItemText(index);
+		string loopID = GetID(loopName);
+		GD.Print($"Signal Emitted for Loop: {loopID}");
+		EmitSignal(nameof(LoopSelected), loopID);
+	}
+
+
 }
