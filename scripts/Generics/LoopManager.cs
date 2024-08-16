@@ -15,6 +15,7 @@ public partial class LoopManager : Control
 	public Dictionary<string, Loop> Queue; 		//loops currently selected
 	public List<Loop> LockedLoops;			//locked in loops, waiting for sync
 	public List<Loop> CurrentlyPlaying;		//loops after sync
+	private float _beatmatchSnapshot;
 	
 	
 	
@@ -38,32 +39,32 @@ public partial class LoopManager : Control
 		_syncing = false;				
 		_loopLength = 8f;
 		_timerStarted = false;
-		_syncFlexibility = 0.01f; //seconds allowed for sync flexibility (smaller is better but more cpu dependant)
+		_beatmatchSnapshot = 0f;
+		_syncFlexibility = 0.012f; //seconds allowed for sync flexibility (smaller is better but more cpu dependant)
 	}
 
-		public void SyncButtonPressed() //when the sync button is pressed we check to see if we are syncing already.
-										//if we are not then we instantiate the loops locking them in to be synced. 
-	{
-		GD.Print("Sync Pressed");
-		if(!_syncing)
-		{
-	    InstantiateLoops();
+		public void SyncButtonPressed() //when the sync button is pressed...
+	{										
+		GD.Print("Sync Pressed");				
+		if(!_syncing)				//if we are not already syncing we push the queued loops
+		{							//into the lockedloops
+	    LockLoops();
 		}
 	    GD.Print("Syncing Audio...");
 		
 	    if (!_timerStarted)
-    	{
-        	_syncTimer = _currentTime;
-        	_timerStarted = true;
-			PlayLoops();
+    	{									//first press
+        	_syncTimer = _currentTime;		
+        	_timerStarted = true;			//start the timer
+			PlayLoops();					//play the first queued loops
     	}
 		else
 		{
-			_syncing = true;
+			_syncing = true;				//not first press, start the sync. 
 		}
 	}
 
-		public void InstantiateLoops()	//takes the queued loops and clones them  
+		public void LockLoops()	//takes the queued loops and clones them  
 	{								//adds the clones to a list that will be played and clears the queue.
 		foreach(string slot in Queue.Keys)
 		{
@@ -79,20 +80,21 @@ public partial class LoopManager : Control
 	{					//the last loop finished is a mulitple of our loop length (within flexibility range)
 		if(_syncing)    //if it is then we call the PlayLoops function.
 		{
-   			var timeSinceSync = _currentTime - _syncTimer;
+			
+   			var timeSinceSync = _currentTime - _syncTimer;			
 			GD.Print($"Syncing Audio at {(int)_loopLength} :: {Math.Abs(timeSinceSync % _loopLength)}");
    			if (timeSinceSync >= 8f && Math.Abs(timeSinceSync % _loopLength) <= _syncFlexibility)
    			{
 				GD.Print("=========== SYNCED!! ===========");
 				
    			    PlayLoops();
+				
+				GD.Print($"SNAPSHOT OF YOUR TIMING: {_beatmatchSnapshot}");				
    			}
 		}
 	}
 
-
-
-	public void ClearPlaying()
+	public void ClearPlaying()			//safe removal of everything currently
 	{
 		List<Loop> PlayingCopy = CurrentlyPlaying.ToList();
 		foreach(Loop loop in PlayingCopy)
