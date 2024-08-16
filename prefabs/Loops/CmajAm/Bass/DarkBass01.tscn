@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://ddhnvldaeu15l"]
-
-[ext_resource type="Script" path="res://scripts/Loop Scripts/CmajAm/Bass/DarkBass01.cs" id="1_8vnb4"]
-
-[node name="Loop" type="Node2D"]
-position = Vector2(429, 301)
-script = ExtResource("1_8vnb4")

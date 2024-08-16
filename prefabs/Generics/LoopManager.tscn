@@ -1,52 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://ih5wwvnjhpwb"]
+[gd_scene load_steps=2 format=3 uid="uid://ih5wwvnjhpwb"]
 
-[ext_resource type="Script" path="res://scripts/Generics/LoopManager.cs" id="1_ypjnp"]
-[ext_resource type="Texture2D" uid="uid://dlytjjbtf4qki" path="res://assets/sprites/menuback1.png" id="2_ycbex"]
+[ext_resource type="Script" path="res://scripts/Generics/LoopManager.cs" id="1_xlc8h"]
 
 [node name="Loop Manager" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-script = ExtResource("1_ypjnp")
-
-[node name="TextureRect2" type="TextureRect" parent="."]
-z_index = -1
-layout_mode = 0
-offset_left = 2.0
-offset_top = 2.0
-offset_right = 1917.0
-offset_bottom = 122.0
-texture = ExtResource("2_ycbex")
-expand_mode = 1
-
-[node name="TextureRect3" type="TextureRect" parent="."]
-z_index = -2
-layout_mode = 0
-offset_left = 2.0
-offset_top = -1.0
-offset_right = 138.0
-offset_bottom = 1076.0
-texture = ExtResource("2_ycbex")
-expand_mode = 1
-
-[node name="TextureRect4" type="TextureRect" parent="."]
-z_index = -2
-layout_mode = 0
-offset_left = 1636.0
-offset_right = 1915.0
-offset_bottom = 1077.0
-texture = ExtResource("2_ycbex")
-expand_mode = 1
-
-[node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = 5.0
-offset_top = 781.0
-offset_right = 1925.0
-offset_bottom = 1080.0
-texture = ExtResource("2_ycbex")
-expand_mode = 1
+script = ExtResource("1_xlc8h")
 
 [node name="Reset" type="Button" parent="."]
 z_index = 1
@@ -77,4 +38,4 @@ text = "SYNC"
 
 [connection signal="pressed" from="Reset" to="." method="Reset"]
 [connection signal="pressed" from="Clear" to="." method="ClearQueue"]
-[connection signal="pressed" from="Sync" to="." method="PlayLoops"]
+[connection signal="pressed" from="Sync" to="." method="SyncButtonPressed"]

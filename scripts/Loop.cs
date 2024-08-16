@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 public partial class Loop : Node2D
 {
@@ -9,13 +11,18 @@ public partial class Loop : Node2D
 	public AudioStreamOggVorbis Audio;
 	public string Instrument;
 	public string Key;
-	// Called when the node enters the scene tree for the first time.
+	public int Impact {set; get;}
+	public Dictionary<string,int> Tags;
+	public new string Name;
+
 	public override void _Ready()
 	{
 		Initialize();
+		SetAudio();
+		Audio.Loop = true;
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
+
 	public override void _Process(double delta)
 	{
 	}
@@ -23,16 +30,17 @@ public partial class Loop : Node2D
 	public void Initialize()
 	{
 		AudioPlayer = new AudioStreamPlayer();
+		Tags = new Dictionary<string,int>();
 	}
 
-	public void SetAudio(string id)
+	public void SetAudio()
 	{	
 		AddChild(AudioPlayer);
-		string loopPath = $"res://assets/audio/loops/{Key}/{Instrument}/{id}.ogg";
+		string loopPath = $"res://assets/audio/loops/{Key}/{Instrument}/{ID}.ogg";
 		Audio = (AudioStreamOggVorbis)ResourceLoader.Load(loopPath);
 		if(Audio == null)
 		{
-			GD.Print($"Failed to load audio: /assets/audio/loops/{Key}/{Instrument}/{id}.ogg");
+			GD.Print($"Failed to load audio: /assets/audio/loops/{Key}/{Instrument}/{ID}.ogg");
 			
 		}
 		this.AudioPlayer.Stream = Audio;	
@@ -61,5 +69,12 @@ public partial class Loop : Node2D
 	{
 		this.Instrument = inst;
 	}
+
+	public void AddTag(string tag, int score) //a loop can have up to 100 points worth of tags
+	{
+		Tags.Add(tag,score);
+	}
+
+
 	
 }

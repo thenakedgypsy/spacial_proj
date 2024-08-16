@@ -10,11 +10,24 @@ public partial class LeadBank : LoopBank
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		base.Initialize();
+	
+		base.Initialize(); //must be run before adding to bank
+		
+		base.AddToBank("Lead", "HouseLead01","Synops", 3, 
+		new Dictionary<string,int>{{"Funky", 30},{"Voodoo", 20},{"Pumpin", 50}}); //100 points worth of points in 3 tags
 
-		base.AddLoop("TranceLead01","Raver Alert");  //test adds
-		base.AddLoop("MysticLead01","Mysterious Plucker"); //test adds
-		base.PopulateSelector();
+		base.AddToBank("Lead", "HouseLead02","Oxid", 5, 
+		new Dictionary<string,int>{{"Funky", 45},{"Voodoo", 5},{"Pumpin", 50}}); //100 points worth of points in 3 tags
+
+		base.AddToBank("Lead", "HouseLead03","Vibe Finder General", 5, 
+		new Dictionary<string,int>{{"Funky", 25},{"Vibin", 25},{"Pumpin", 50}}); //100 points worth of points in 3 tags
+
+		base.AddToBank("Lead", "HouseLead04","Chunky Monkey", 5, 
+		new Dictionary<string,int>{{"Funky", 25},{"Chunky", 25},{"Pumpin", 50}}); //100 points worth of points in 3 tags
+
+
+		
+		base.PopulateSelector(); // must be run after adding to bank
 
 	}
 

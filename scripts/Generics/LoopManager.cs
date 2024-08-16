@@ -5,150 +5,119 @@ using System.Linq;
 
 public partial class LoopManager : Control
 {
-	public List<PackedScene> ToPlay;
-	public List<Node> Playing;
-	private string _lead {get; set;}
-	private string _rythm {get; set;}
-	private string _bass {get; set;}
-	private string _drums {get; set;}
+	private  float _syncFlexibility; 
 	private float _syncTimer;
 	private float _currentTime;
 	private bool _syncing;
 	private bool _timerStarted;
 	private float _loopLength;
-	public string Key;
-	private bool _queueWaitingForSync;
 	private Button _syncButton;
-	// Called when the node enters the scene tree for the first time.
+	public Dictionary<string, Loop> Queue;
+	public List<Loop> AboutToPlay;
+	public List<Loop> CurrentlyPlaying;
+	
+	
+	
+
 	public override void _Ready()
 	{
 		Initialize();
-		//PlayTestLoops();
-		//SetLoops("Kick01", "Snare01","Hat01");
-		//InstantiateLoops();
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-   		_currentTime += (float)delta;
-		
-		
+   		_currentTime += (float)delta;				
 		Sync();
-		FlipSyncButton();
-		
 	}
 
-	public void FlipSyncButton()
+	public void Initialize()
 	{
-		if(_syncing)
-		{
-			_syncButton.Disabled = true;
-		}
-		else
-		{
-			_syncButton.Disabled = false;
-		}
-
+		Queue = new Dictionary<string, Loop>();
+		AboutToPlay = new List<Loop>();
+		CurrentlyPlaying = new List<Loop>();
+		_syncing = false;
+		_loopLength = 8f;
+		_timerStarted = false;
+		_syncFlexibility = 0.01f; //seconds allowed for sync flexibility (smaller is better but more cpu dependant)
 	}
 
-	public void Sync()
+		public void Sync()
 	{
 		if(_syncing)
 		{
    			var timeSinceSync = _currentTime - _syncTimer;
 			GD.Print($"Syncing Audio at {(int)_loopLength} :: {Math.Abs(timeSinceSync % _loopLength)}");
-   			if (timeSinceSync >= 8f && Math.Abs(timeSinceSync % _loopLength) <= 0.012f)
+   			if (timeSinceSync >= 8f && Math.Abs(timeSinceSync % _loopLength) <= 0.01f)
    			{
-   			    OnSync();
+				GD.Print("=========== SYNCED!! ===========");
+				
+   			    PlayLoops();
    			}
-		}
-
-	}
-
-
-	public void Initialize()
-	{
-		_syncing = false;
-		_loopLength = 8f;
-		_timerStarted = false;
-		ToPlay = new List<PackedScene>();
-		Playing = new List<Node>();  
-		Key = "CmajAm";	
-		_syncButton = GetNode<Button>("Sync");
-	}
-	public void SetLoops()
-	{
-		if(!string.IsNullOrEmpty(_lead))
-		{
-			GD.Print($"Setting Loops");
-			var loop1 = GD.Load<PackedScene>($"res://prefabs/Loops/{Key}/Lead/{_lead}.tscn");
-			if(loop1 != null)
-			{
-				ToPlay.Add(loop1);
-				GD.Print($"Added {loop1}");
-			}
-			else
-			{
-				GD.Print($"Loop Scene at res://prefabs/Loops/{Key}/Lead/{_lead}.tscn - does not exist");
-			}
-		}
-		if(!string.IsNullOrEmpty(_rythm))
-		{
-			var loop2 = GD.Load<PackedScene>($"res://prefabs/Loops/{Key}/Rythm/{_rythm}.tscn");	
-			if (loop2 != null)
-			{
- 				ToPlay.Add(loop2);
-				GD.Print($"Added {loop2}");			
-			}
-			else
-			{
-				GD.Print($"Loop Scene at res://prefabs/Loops/{Key}/Rythm/{_rythm}.tscn - does not exist");
-			}
-		}
-		if(!string.IsNullOrEmpty(_bass))
-		{
-			var loop3 = GD.Load<PackedScene>($"res://prefabs/Loops/{Key}/Bass/{_bass}.tscn");	
-			if (loop3 != null)
-			{
- 				ToPlay.Add(loop3);
-				GD.Print($"Added {loop3}");
-			}
-			else
-			{
-				GD.Print($"Loop Scene at res://prefabs/Loops/{Key}/Bass/{_bass}.tscn - does not exist");
-			}
-		}
-		if(!string.IsNullOrEmpty(_drums))
-		{
-			var loop4 = GD.Load<PackedScene>($"res://prefabs/Loops/Drums/{_drums}.tscn");	
-			if (loop4 != null)
-			{
- 				ToPlay.Add(loop4);
-				GD.Print($"Added {loop4}");
-			}
-			else
-			{
-				GD.Print($"Loop Scene at res://prefabs/Loops/drums/{_drums}.tscn - does not exist");
-			}
 		}
 	}
 
 	public void InstantiateLoops()
 	{
-		foreach(var scene in ToPlay)
+		foreach(string slot in Queue.Keys)
 		{
-			var instance = scene.Instantiate();
-			GD.Print($"Scene {scene} instantiated as {instance}");
-			AddChild(instance);
-			Playing.Add(instance);
+			Loop originalLoop = Queue[slot];
+			Loop loop = CloneLoop(originalLoop);
+			AddChild(loop);
+			AboutToPlay.Add(loop);
 		}
+		ClearQueue();
 	}
-	public void PlayLoops()
+
+		public void ClearPlaying()
 	{
+		List<Loop> PlayingCopy = CurrentlyPlaying.ToList();
+		foreach(Loop loop in PlayingCopy)
+		{
+			RemoveChild(loop);
+			loop.QueueFree();
+			CurrentlyPlaying.Remove(loop);			
+		}	
+	}
+
+	public Loop CloneLoop(Loop toClone)
+	{
+		Loop newLoop = (Loop)toClone.Duplicate();
+		newLoop.Key = toClone.Key;
+		newLoop.Instrument = toClone.Instrument;
+		newLoop.Tags = toClone.Tags;
+		newLoop.Impact = toClone.Impact;
+		newLoop.Name = toClone.Name;
+		GD.Print("Instantiating loop");
+		GD.Print("{");
+		GD.Print($"ID: {newLoop.ID}");
+		GD.Print($"Key: {newLoop.Key}");
+		GD.Print($"Inst: {newLoop.Instrument}");	
+		GD.Print($"Tags: {newLoop.Tags}");		
+		GD.Print($"Impact: {newLoop.Impact}");
+		GD.Print($"Name: {newLoop.Name}");
+		GD.Print("}");
+		return newLoop;
+	}
+
+	public void PlayLoops()
+	{	
+		ClearPlaying();
+		_syncing = false;		
+		foreach(Loop loop in AboutToPlay)
+		{
+			loop.Play();
+			CurrentlyPlaying.Add(loop);
+		}
+		AboutToPlay.Clear();
+		
+	}
+
+	public void SyncButtonPressed()
+	{
+		GD.Print("Sync Pressed");
 		if(!_syncing)
 		{
-	    SetLoops();
+	    InstantiateLoops();
 		}
 	    GD.Print("Syncing Audio...");
 		
@@ -156,78 +125,46 @@ public partial class LoopManager : Control
     	{
         	_syncTimer = _currentTime;
         	_timerStarted = true;
-			OnSync();
+			PlayLoops();
     	}
 		else
 		{
 			_syncing = true;
 		}
+	}
 
-		
-	}
-	private void OnSync()
-	{	
-		
-		_syncing = false;
-		FreePlaying();
-    	InstantiateLoops();
-    	ClearQueue();
-		GD.Print("=========== SYNCED!! ===========");		
-	}
-	public void FreePlaying()
+	public void QueueLead(Loop lead)
 	{
-		List<Node> PlayingCopy = Playing.ToList();
-		foreach(Node node in PlayingCopy)
-		{
-			Playing.Remove(node);
-			node.QueueFree();
-			
-		}
+		Queue.Add("Lead", lead);
 	}
-	public void ClearQueue()
-	{
-		List<PackedScene> ToPlayCopy = ToPlay.ToList();
-		foreach(PackedScene scene in ToPlayCopy)
-		{
 
-			ToPlay.Remove(scene);
-			GD.Print($"Removed {scene} from Queue.");
-		}
-		_lead = null;
-		_rythm = null;
-		_bass = null;
-		_drums = null;
-		GD.Print($"Cleared Queued Loops.");
-		GD.Print($"=====================================");
+	public void QueueRythm(Loop rythm)
+	{
+		Queue.Add("Rythm", rythm);
+	}
+
+	public void QueueBass(Loop bass)
+	{
+		Queue.Add("Bass", bass);
+	}
+
+	public void QueueDrums(Loop drums)
+	{
+		Queue.Add("Drums", drums);
+	}
+
+
+
+		public void ClearQueue()
+	{
+		Queue.Clear();
 	}
 
 	public void Reset()
 	{
-		FreePlaying();
+		ClearPlaying();
 		ClearQueue();
 		_timerStarted = false;
+		AboutToPlay.Clear();
 	}
-
-	public void _SetLead(string loopID, string loopName)
-	{
-		GD.Print($"Lead Loop: {loopName} added to queue");
-		_lead = loopID;
-	}
-	public void _SetRythm(string loopID, string loopName)
-	{
-		GD.Print($"Rythm Loop: {loopName} added to queue");
-		_rythm = loopID;
-	}
-	public void _SetBass(string loopID, string loopName)
-	{
-		GD.Print($"Bass Loop: {loopName} added to queue");
-		_bass = loopID;
-	}
-	public void _SetDrums(string loopID, string loopName)
-	{
-		GD.Print($"Drum Loop: {loopName} added to queue");
-		_drums = loopID;
-	}
-
-
 }
