@@ -41,7 +41,7 @@ public partial class LoopManager : Control
 		_syncFlexibility = 0.01f; //seconds allowed for sync flexibility (smaller is better but more cpu dependant)
 	}
 
-		public void Sync()
+	public void Sync()
 	{
 		if(_syncing)
 		{
@@ -68,7 +68,7 @@ public partial class LoopManager : Control
 		ClearQueue();
 	}
 
-		public void ClearPlaying()
+	public void ClearPlaying()
 	{
 		List<Loop> PlayingCopy = CurrentlyPlaying.ToList();
 		foreach(Loop loop in PlayingCopy)
@@ -155,7 +155,7 @@ public partial class LoopManager : Control
 
 
 
-		public void ClearQueue()
+	public void ClearQueue()
 	{
 		Queue.Clear();
 	}

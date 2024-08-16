@@ -9,10 +9,10 @@
 [node name="Gig" type="Node2D"]
 
 [node name="Loop Manager" parent="." instance=ExtResource("1_66bcr")]
-offset_left = -3.0
-offset_top = -21.0
-offset_right = 37.0
-offset_bottom = 19.0
+offset_left = 7.0
+offset_top = -4.0
+offset_right = 47.0
+offset_bottom = 36.0
 
 [node name="Bass" parent="." instance=ExtResource("2_jp6e3")]
 position = Vector2(1058, 849)
@@ -28,4 +28,6 @@ position = Vector2(389, 852)
 position = Vector2(717, 848)
 
 [connection signal="LoopSelected" from="Bass" to="Loop Manager" method="QueueBass"]
+[connection signal="LoopSelected" from="Drum" to="Loop Manager" method="QueueDrums"]
 [connection signal="LoopSelected" from="Lead" to="Loop Manager" method="QueueLead"]
+[connection signal="LoopSelected" from="Rythm" to="Loop Manager" method="QueueRythm"]
