@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class Inventory : Control
+public partial class Inventory : Control 
 {
 	public static Inventory Instance;
 	public List<string> InstrumentList;

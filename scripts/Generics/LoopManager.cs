@@ -5,16 +5,16 @@ using System.Linq;
 
 public partial class LoopManager : Control
 {
-	private  float _syncFlexibility; 
-	private float _syncTimer;
-	private float _currentTime;
-	private bool _syncing;
-	private bool _timerStarted;
-	private float _loopLength;
-	private Button _syncButton;
-	public Dictionary<string, Loop> Queue;
-	public List<Loop> AboutToPlay;
-	public List<Loop> CurrentlyPlaying;
+	private  float _syncFlexibility;  //seconds allowed for sync flexibility (smaller is closer to perfect timing)
+	private float _syncTimer;		//tracks the time the sync starts at
+	private float _currentTime;     //updates every frame to the current time
+	private bool _syncing;			//tracks whether we are waiting for the sync to finish
+	private bool _timerStarted;		//tracks whterh the sync timer has been tured on
+	private float _loopLength;		//length of the loops in seconds 
+	private Button _syncButton;		//syncbutton
+	public Dictionary<string, Loop> Queue; 		//loops currently selected
+	public List<Loop> LockedLoops;			//locked in loops, waiting for sync
+	public List<Loop> CurrentlyPlaying;		//loops after sync
 	
 	
 	
@@ -30,24 +30,58 @@ public partial class LoopManager : Control
 		Sync();
 	}
 
-	public void Initialize()
+	public void Initialize()  //inialize props
 	{
 		Queue = new Dictionary<string, Loop>();
-		AboutToPlay = new List<Loop>();
+		LockedLoops = new List<Loop>();
 		CurrentlyPlaying = new List<Loop>();
-		_syncing = false;
+		_syncing = false;				
 		_loopLength = 8f;
 		_timerStarted = false;
 		_syncFlexibility = 0.01f; //seconds allowed for sync flexibility (smaller is better but more cpu dependant)
 	}
 
-	public void Sync()
+		public void SyncButtonPressed() //when the sync button is pressed we check to see if we are syncing already.
+										//if we are not then we instantiate the loops locking them in to be synced. 
 	{
-		if(_syncing)
+		GD.Print("Sync Pressed");
+		if(!_syncing)
+		{
+	    InstantiateLoops();
+		}
+	    GD.Print("Syncing Audio...");
+		
+	    if (!_timerStarted)
+    	{
+        	_syncTimer = _currentTime;
+        	_timerStarted = true;
+			PlayLoops();
+    	}
+		else
+		{
+			_syncing = true;
+		}
+	}
+
+		public void InstantiateLoops()	//takes the queued loops and clones them  
+	{								//adds the clones to a list that will be played and clears the queue.
+		foreach(string slot in Queue.Keys)
+		{
+			Loop originalLoop = Queue[slot];
+			Loop loop = CloneLoop(originalLoop);
+			AddChild(loop);
+			LockedLoops.Add(loop);
+		}
+		ClearQueue();
+	}
+
+	public void Sync()	//if a sync is in progess then this function checks if the time since 
+	{					//the last loop finished is a mulitple of our loop length (within flexibility range)
+		if(_syncing)    //if it is then we call the PlayLoops function.
 		{
    			var timeSinceSync = _currentTime - _syncTimer;
 			GD.Print($"Syncing Audio at {(int)_loopLength} :: {Math.Abs(timeSinceSync % _loopLength)}");
-   			if (timeSinceSync >= 8f && Math.Abs(timeSinceSync % _loopLength) <= 0.01f)
+   			if (timeSinceSync >= 8f && Math.Abs(timeSinceSync % _loopLength) <= _syncFlexibility)
    			{
 				GD.Print("=========== SYNCED!! ===========");
 				
@@ -56,17 +90,7 @@ public partial class LoopManager : Control
 		}
 	}
 
-	public void InstantiateLoops()
-	{
-		foreach(string slot in Queue.Keys)
-		{
-			Loop originalLoop = Queue[slot];
-			Loop loop = CloneLoop(originalLoop);
-			AddChild(loop);
-			AboutToPlay.Add(loop);
-		}
-		ClearQueue();
-	}
+
 
 	public void ClearPlaying()
 	{
@@ -103,55 +127,65 @@ public partial class LoopManager : Control
 	{	
 		ClearPlaying();
 		_syncing = false;		
-		foreach(Loop loop in AboutToPlay)
+		foreach(Loop loop in LockedLoops)
 		{
 			loop.Play();
 			CurrentlyPlaying.Add(loop);
 		}
-		AboutToPlay.Clear();
+		LockedLoops.Clear();
 		
 	}
 
-	public void SyncButtonPressed()
-	{
-		GD.Print("Sync Pressed");
-		if(!_syncing)
-		{
-	    InstantiateLoops();
-		}
-	    GD.Print("Syncing Audio...");
-		
-	    if (!_timerStarted)
-    	{
-        	_syncTimer = _currentTime;
-        	_timerStarted = true;
-			PlayLoops();
-    	}
-		else
-		{
-			_syncing = true;
-		}
-	}
 
 	public void QueueLead(Loop lead)
 	{
-		Queue.Add("Lead", lead);
+		if(Queue.ContainsKey("Lead"))
+		{	
+			Queue["Lead"] = lead;
+		}
+		else
+		{
+			Queue.Add("Lead", lead);
+		}
+		
 	}
 
 	public void QueueRythm(Loop rythm)
 	{
-		Queue.Add("Rythm", rythm);
+		if(Queue.ContainsKey("Rythm"))
+		{
+			Queue["Rythm"] = rythm;
+		}
+		else
+		{
+			Queue.Add("Rythm", rythm);
+		}
 	}
 
 	public void QueueBass(Loop bass)
 	{
-		Queue.Add("Bass", bass);
+		if(Queue.ContainsKey("Bass"))
+		{
+			Queue["Bass"] = bass;
+		}
+		else
+		{
+			Queue.Add("Bass", bass);
+		}
 	}
 
 	public void QueueDrums(Loop drums)
 	{
-		Queue.Add("Drums", drums);
+		if(Queue.ContainsKey("Drums"))
+		{
+			Queue["Drums"] = drums;
+		}
+		else
+		{
+			Queue.Add("Drums", drums);
+		}
 	}
+
 
 
 
@@ -165,6 +199,6 @@ public partial class LoopManager : Control
 		ClearPlaying();
 		ClearQueue();
 		_timerStarted = false;
-		AboutToPlay.Clear();
+		LockedLoops.Clear();
 	}
 }
