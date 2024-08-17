@@ -1,22 +1,38 @@
-[gd_scene load_steps=2 format=3 uid="uid://dnls68iog83du"]
+[gd_scene load_steps=3 format=3 uid="uid://dnls68iog83du"]
 
 [ext_resource type="Script" path="res://scripts/Generics/LoopBank.cs" id="1_x6m6v"]
+[ext_resource type="Texture2D" uid="uid://dlytjjbtf4qki" path="res://assets/sprites/menuback1.png" id="2_shjdj"]
 
 [node name="Loop Bank" type="Node2D"]
 script = ExtResource("1_x6m6v")
 
 [node name="Button" type="Button" parent="."]
 offset_left = -51.0
-offset_top = 11.0
+offset_top = -78.0
 offset_right = 50.0
-offset_bottom = 42.0
+offset_bottom = -47.0
 text = "Queue"
 
 [node name="Selector" type="OptionButton" parent="Button"]
 layout_mode = 0
-offset_left = -32.0
-offset_top = -41.0
-offset_right = 132.0
-offset_bottom = -21.0
+offset_left = -30.0
+offset_top = 122.0
+offset_right = 134.0
+offset_bottom = 142.0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -53.0
+offset_top = -42.0
+offset_right = 54.0
+offset_bottom = 38.0
+texture = ExtResource("2_shjdj")
+expand_mode = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TextureRect"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 104.0
+offset_bottom = 77.0
 
 [connection signal="pressed" from="Button" to="." method="Selected"]

@@ -15,17 +15,17 @@ offset_right = 47.0
 offset_bottom = 36.0
 
 [node name="Bass" parent="." instance=ExtResource("2_jp6e3")]
-position = Vector2(1058, 849)
+position = Vector2(1088, 989)
 scale = Vector2(1, 0.995833)
 
 [node name="Drum" parent="." instance=ExtResource("3_j8je6")]
-position = Vector2(1371, 851)
+position = Vector2(1274, 996)
 
 [node name="Lead" parent="." instance=ExtResource("5_71k8p")]
-position = Vector2(389, 852)
+position = Vector2(704, 992)
 
 [node name="Rythm" parent="." instance=ExtResource("4_ukcxx")]
-position = Vector2(717, 848)
+position = Vector2(900, 992)
 
 [connection signal="LoopSelected" from="Bass" to="Gig Manager" method="QueueBass"]
 [connection signal="LoopSelected" from="Drum" to="Gig Manager" method="QueueDrums"]

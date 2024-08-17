@@ -199,7 +199,7 @@ public partial class GigManager : Control
 			{
 				GD.Print($"Negative so subtracting to score...");
 				_flowScore -= (int)_changeFactor;
-				if(_changeFactor < 4)
+				if(_changeFactor < -4)
 				{
 					GD.Print($"BREAKDOWN!!");
 					_breakdown = true;

@@ -1,23 +1,43 @@
-[gd_scene load_steps=2 format=3 uid="uid://s2a11x1k4mx7"]
+[gd_scene load_steps=3 format=3 uid="uid://s2a11x1k4mx7"]
 
 [ext_resource type="Script" path="res://scripts/TestBanks/DrumBank.cs" id="1_7x5qm"]
+[ext_resource type="Texture2D" uid="uid://dlytjjbtf4qki" path="res://assets/sprites/menuback1.png" id="2_shb7b"]
 
 [node name="Loop Bank" type="Node2D"]
-position = Vector2(0, 1)
+position = Vector2(-1, 0)
 script = ExtResource("1_7x5qm")
 
 [node name="Button" type="Button" parent="."]
-offset_left = -53.0
-offset_top = 5.0
-offset_right = 63.0
-offset_bottom = 36.0
+offset_left = -56.0
+offset_top = -78.0
+offset_right = 60.0
+offset_bottom = -47.0
 text = "Queue Drums"
+metadata/_edit_use_anchors_ = true
 
 [node name="Selector" type="OptionButton" parent="Button"]
 layout_mode = 0
-offset_left = -29.0
-offset_top = -31.0
-offset_right = 135.0
-offset_bottom = -11.0
+offset_left = -21.0
+offset_top = 123.0
+offset_right = 143.0
+offset_bottom = 143.0
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -52.0
+offset_top = -42.0
+offset_right = 55.0
+offset_bottom = 38.0
+texture = ExtResource("2_shb7b")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TextureRect"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 104.0
+offset_bottom = 77.0
+metadata/_edit_use_anchors_ = true
 
 [connection signal="pressed" from="Button" to="." method="Selected"]

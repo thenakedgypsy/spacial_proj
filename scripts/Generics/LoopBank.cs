@@ -8,6 +8,7 @@ public partial class LoopBank : Node2D
 	public Dictionary<string,string> SelectorDict;
 	public Dictionary<string,Loop> LoopDB;
 	private OptionButton _selector;
+	private RichTextLabel _tagList;
 
 	[Signal]
     public delegate void LoopSelectedEventHandler(Loop loop);
@@ -29,6 +30,7 @@ public partial class LoopBank : Node2D
 		_selector = GetNode<OptionButton>("Button/Selector");
 		SelectorDict = new Dictionary<string, string>();
 		LoopDB = new Dictionary<string, Loop>();
+		_tagList = GetNode<RichTextLabel>("TextureRect/RichTextLabel");
 
 	}
 
@@ -46,6 +48,11 @@ public partial class LoopBank : Node2D
 			_selector.AddItem(name);
 		//	GD.Print($"Added {name} to selector");
 		}	
+	}
+
+	public override void _Process(double delta)
+	{
+		SendTagsToUI();
 	}
 
 	public string GetID(string searchedName)
@@ -71,14 +78,30 @@ public partial class LoopBank : Node2D
 		_selector.Visible = true;
 	}
 
-		public void Selected()
+	public void Selected()
+	{
+		Loop loop = GetCurrentSelection();		
+		GD.Print($"Adding to Queue: {loop.ID}");
+		EmitSignal(nameof(LoopSelected), loop);
+	}
+
+	public Loop GetCurrentSelection()
 	{
 		int index = _selector.Selected;
 		string loopName = _selector.GetItemText(index);
 		Loop loop = GetFromBank(loopName);
-		//send a loop here instead. 
-		GD.Print($"Adding to Queue: {loop.ID}");
-		EmitSignal(nameof(LoopSelected), loop);
+		return loop;
+	}
+
+	public void SendTagsToUI()
+	{
+		Loop loop = GetCurrentSelection();
+		string uiPrint = "";
+		foreach(string tag in loop.Tags.Keys)
+		{
+			uiPrint = uiPrint + $"{tag} :: {loop.Tags[tag]} \n";
+		}
+		_tagList.Text = uiPrint;
 	}
 
 	public void AddToBank(string instrument,string ID, string name, int impact, Dictionary<string,int> tags, string key = "CmajAm")
