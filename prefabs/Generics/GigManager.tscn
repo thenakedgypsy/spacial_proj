@@ -1,13 +1,13 @@
 [gd_scene load_steps=2 format=3 uid="uid://ih5wwvnjhpwb"]
 
-[ext_resource type="Script" path="res://scripts/Generics/LoopManager.cs" id="1_xlc8h"]
+[ext_resource type="Script" path="res://scripts/Generics/GigManager.cs" id="1_570b6"]
 
-[node name="Loop Manager" type="Control"]
+[node name="Gig Manager" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-script = ExtResource("1_xlc8h")
+script = ExtResource("1_570b6")
 
 [node name="Reset" type="Button" parent="."]
 z_index = 1

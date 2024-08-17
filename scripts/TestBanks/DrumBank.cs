@@ -15,16 +15,16 @@ public partial class DrumBank : LoopBank
 
 			
 		
-		base.AddToBank("Drums", "HouseKick01","Kick", 3, 
+		base.AddToBank("Drums", "HouseKick01","Kick", 5, 
 		new Dictionary<string,int>{{"Funky", 30},{"Voodoo", 20},{"Pumpin", 50}}, "Drums"); //100 points worth of points in 3 tags
 
-		base.AddToBank("Drums", "HouseKickHats01","Kick Hats", 5, 
+		base.AddToBank("Drums", "HouseKickHats01","Kick Hats", 6, 
 		new Dictionary<string,int>{{"Funky", 45},{"Voodoo", 5},{"Pumpin", 50}}, "Drums"); //100 points worth of points in 3 tags
 
-		base.AddToBank("Drums", "HouseKickClap01","Kick Claps", 5, 
+		base.AddToBank("Drums", "HouseKickClap01","Kick Claps", 8, 
 		new Dictionary<string,int>{{"Funky", 25},{"Vibin", 25},{"Pumpin", 50}}, "Drums"); //100 points worth of points in 3 tags
 
-		base.AddToBank("Drums", "HouseKickClap02","Kick Claps 2", 5, 
+		base.AddToBank("Drums", "HouseKickClap02","Kick Claps 2", 8, 
 		new Dictionary<string,int>{{"Funky", 25},{"Chunky", 25},{"Pumpin", 50}}, "Drums"); //100 points worth of points in 3 tags
 		
 		

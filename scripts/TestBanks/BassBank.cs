@@ -10,7 +10,7 @@ public partial class BassBank : LoopBank
 	{
 		base.Initialize(); //must be run before adding to bank
 		
-		base.AddToBank("Bass", "HouseBass01","Funky Voodoo", 3, 
+		base.AddToBank("Bass", "HouseBass01","Funky Voodoo", 4, 
 		new Dictionary<string,int>{{"Funky", 30},{"Voodoo", 20},{"Pumpin", 50}}); //100 points worth of points in 3 tags
 
 		base.AddToBank("Bass", "HouseBass02","Master Exploder", 5, 

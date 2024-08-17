@@ -35,7 +35,7 @@ public partial class LoopBank : Node2D
 	public void AddLoop(string ID, string name)
 	{
 		SelectorDict.Add(name,ID);
-		GD.Print($"Added {name} with ID: {ID} to loop bank");
+	//	GD.Print($"Added {name} with ID: {ID} to loop bank");
 	}
 
 	public void PopulateSelector()
@@ -44,7 +44,7 @@ public partial class LoopBank : Node2D
 		foreach(string name in SelectorDict.Keys)
 		{
 			_selector.AddItem(name);
-			GD.Print($"Added {name} to selector");
+		//	GD.Print($"Added {name} to selector");
 		}	
 	}
 
@@ -70,18 +70,8 @@ public partial class LoopBank : Node2D
 		
 		_selector.Visible = true;
 	}
-//
-//public void Selected()
-//{
-//	int index = _selector.Selected;
-//	string loopName = _selector.GetItemText(index);
-//	string loopID = GetID(loopName);
-//	//send a loop here instead. 
-//	GD.Print($"Signal Emitted for Loop: {loopID}");
-//	EmitSignal(nameof(LoopSelected), loopID, loopName);
-//}
-//
-		public void Selected() //to replace selected after refactor
+
+		public void Selected()
 	{
 		int index = _selector.Selected;
 		string loopName = _selector.GetItemText(index);
@@ -100,7 +90,7 @@ public partial class LoopBank : Node2D
 		loop.Tags = tags;
 		loop.Instrument = instrument;
 		loop.Key = key;
-		GD.Print($"Adding to bank: {ID} : {loop}");
+	//	GD.Print($"Adding to bank: {ID} : {loop}");
 		if(loop != null)
 		{
 			LoopDB.Add(loop.ID, loop);

@@ -75,6 +75,18 @@ public partial class Loop : Node2D
 		Tags.Add(tag,score);
 	}
 
-
+	public void PrintLoopInfo()
+	{
+		GD.Print($"ID: {this.ID}");
+		GD.Print($"Key: {this.Key}");
+		GD.Print($"Impact: {this.Impact}");
+		GD.Print($"Tags: ");
+		foreach(string tag in Tags.Keys)
+		{
+			GD.Print($"{tag} : {Tags[tag]}");
+		}
+		GD.Print($"Instrument: {this.Instrument}");
+		GD.Print($"Instrument: {this.Name}");
+	}	
 	
 }
