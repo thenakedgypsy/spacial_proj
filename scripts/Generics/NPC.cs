@@ -13,8 +13,11 @@ public partial class NPC : Area2D
 	public AnimatedSprite2D ChatBubble;
 	public RichTextLabel Dialogue;					
 	public int CurrentLoopPoint; //so we can just loop back to the last item of key text 
-	private bool _bubbleUnfolded;
+	private bool _bubbleOpen;
 	public int LoopPointsSeen;
+	private bool _moreToSay;
+	private AnimatedSprite2D _questMarker;
+	public bool HasQuest;
 
 	public override void _Ready()
 	{
@@ -27,18 +30,23 @@ public partial class NPC : Area2D
 		currentDialogue = 0;
 		ChatBubble = GetNode<AnimatedSprite2D>("ChatBubble");
 		Dialogue = ChatBubble.GetNode<RichTextLabel>("RichTextLabel");
+		_questMarker = GetNode<AnimatedSprite2D>("QuestMarker");
 		_playerNear = false;
 		_isTalking = false;
 		CurrentLoopPoint = 0;
 		DialogueList = new List<(string,bool)>();
-		_bubbleUnfolded = true;
+		_bubbleOpen = true;
 		LoopPointsSeen = 0;
+		_moreToSay = false;
+		HasQuest = false;
 	}
 
 	public override void _Process(double delta)
 	{
 		checkTalk();
-		checkBubble();	
+		checkBubble();
+		CheckMoreToSay();	
+		CheckHasQusest();
 			
 	}
 
@@ -63,23 +71,51 @@ public partial class NPC : Area2D
 		if(body is Player)
 		{
 			_playerNear = true;
+			CheckMoreToSay();	
+			BubbleAnimationFinished();
 			GD.Print("Player is next to an NPC");
 		}
 	}
 
 	public void checkBubble()
 	{
-  		if (_isTalking && !_bubbleUnfolded)
+  		if (_isTalking && !_bubbleOpen)
   		{   
-  		    UnfoldChatBubble();
-  		    _bubbleUnfolded = true;            
+  		    OpenChatBubble();
+  		    _bubbleOpen = true;            
   		}
-		else if (!_isTalking && _bubbleUnfolded)
+		else if (!_isTalking && _bubbleOpen)
   		{           
   		    
-  		    FoldChatBubble();
-  		    _bubbleUnfolded = false;
+  		    CloseChatBubble();
+  		    _bubbleOpen = false;
     	}
+	}
+
+	public void CheckMoreToSay()
+	{
+		if(_playerNear && (CurrentLoopPoint < DialogueList.Count -1) && _bubbleOpen == false)
+		{
+			 
+			_moreToSay = true;			
+		}
+		else
+		{
+			_moreToSay = false;
+			
+		}
+	}
+
+	public void CheckHasQusest()
+	{
+		if(HasQuest && !_isTalking && !_moreToSay)
+		{
+			_questMarker.Visible = true;
+		}
+		else
+		{
+			_questMarker.Visible = false;
+		}
 	}
 
 	public void bodyExited(Node2D body)
@@ -87,10 +123,11 @@ public partial class NPC : Area2D
 		if(body is Player)
 		{
       		_isTalking = false;
-			if(_bubbleUnfolded)
+			if(_bubbleOpen)
 			{
-      			_bubbleUnfolded = false;  // Ensure the flag is reset
-      			FoldChatBubble(); 
+				
+      			_bubbleOpen = false;  // Ensure the flag is reset
+      			CloseChatBubble(); 
 			}
       		Dialogue.Visible = false;
 			if(CurrentLoopPoint > 0)
@@ -102,6 +139,8 @@ public partial class NPC : Area2D
 				currentDialogue = 0;
 			}
 			_playerNear = false;
+			_moreToSay = false;
+			BubbleAnimationFinished();
 			GD.Print("Player is no longer next to an NPC");
 		}
 	}
@@ -135,16 +174,18 @@ public partial class NPC : Area2D
 		DialogueList.Add(dialogue);
 	}
 	
-	public void UnfoldChatBubble()
+	public void OpenChatBubble()
 	{
-		ChatBubble.Animation = "unfold";
+		_moreToSay = false;
+		ChatBubble.Animation = "opening";
 		ChatBubble.Play();
+		
 		//GD.Print($"Bubble status {ChatBubble.Animation}");
 	}
 
-	public void FoldChatBubble()
+	public void CloseChatBubble()
 	{
-		ChatBubble.Animation = "fold";
+		ChatBubble.Animation = "closing";
 		ChatBubble.Play();
 		Dialogue.Visible = false;
 		//GD.Print($"Bubble status {ChatBubble.Animation}");
@@ -152,11 +193,23 @@ public partial class NPC : Area2D
 
 	public void BubbleAnimationFinished()
 	{
-		if (_bubbleUnfolded)
+		if (_bubbleOpen)
    		{
+			ChatBubble.Animation = "open";
    		    Dialogue.Visible = true;
    		}
+		if(_moreToSay)
+		{
+			ChatBubble.Animation = "waiting";
+			GD.Print("setting waiting");
+			ChatBubble.Play();
+		}
+		else if(!_bubbleOpen)
+		{
+			ChatBubble.Animation = "closed";	
+		}		
 	}
+
 
 	public int GetCurrentLoopPoint()
 	{

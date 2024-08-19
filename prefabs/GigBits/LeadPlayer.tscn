@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://r8g7gvax5pgl"]
+
+[ext_resource type="Texture2D" uid="uid://c8tqk3t7s4mlu" path="res://assets/sprites/BandMembers/tankGig1-Sheet.png" id="1_5n65l"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2osrm"]
+atlas = ExtResource("1_5n65l")
+region = Rect2(0, 0, 169, 248)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f3n3l"]
+atlas = ExtResource("1_5n65l")
+region = Rect2(169, 0, 169, 248)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dljxx"]
+atlas = ExtResource("1_5n65l")
+region = Rect2(338, 0, 169, 248)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kjcuc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2osrm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f3n3l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dljxx")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[node name="BandMember" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(21, 4)
+sprite_frames = SubResource("SpriteFrames_kjcuc")
+autoplay = "default"
+frame_progress = 0.189754

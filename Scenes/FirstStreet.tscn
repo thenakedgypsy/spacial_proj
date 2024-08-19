@@ -213,7 +213,7 @@ z_index = 1
 position = Vector2(873, 320)
 
 [node name="Old Man Gerald" parent="." instance=ExtResource("3_i0x6s")]
-position = Vector2(611, 417)
+position = Vector2(602, 417)
 
 [node name="Arnold" parent="." instance=ExtResource("5_butpv")]
 position = Vector2(715, 289)

@@ -26,6 +26,7 @@ public partial class GigManager : Control
 	private int _impactLastRound;
 	private bool _drop;
 	private bool _breakdown;
+	private AnimatedSprite2D _loopCounter;
 
 	
 
@@ -63,6 +64,7 @@ public partial class GigManager : Control
 		_drop = false;
 		_breakdown = false;
 		_flowScore = 0;
+		_loopCounter = GetNode<AnimatedSprite2D>("LoopCounter");
 	}
 
 		public void SyncButtonPressed() //when the sync button is pressed...
@@ -82,6 +84,7 @@ public partial class GigManager : Control
 			AddToPlayedTags();
 			CalculateImpact(); 	//setting initial scores
 			_roundNumber++;
+			UpdateRoundCounter();
 			GD.Print($"=========== ROUND: {_roundNumber} ===========");			//play the first queued loops
     	}
 		else
@@ -132,7 +135,8 @@ public partial class GigManager : Control
 				GD.Print($"Your timing snapshot: Over {(int)(_beatmatchSnapshot / 8 * 10) * 10}% accurate");
 				CalculateImpact();
 				_roundNumber++;
-				GD.Print($"=========== ROUND: {_roundNumber} ===========");			
+				GD.Print($"=========== ROUND: {_roundNumber} ===========");
+				UpdateRoundCounter();			
    			}
 		}
 	}
@@ -232,6 +236,15 @@ public partial class GigManager : Control
 					_totalTags.Add(tag,loop.Tags[tag]);
 				}
 			}
+		}
+	}
+
+	public void UpdateRoundCounter()
+	{
+		if(_roundNumber < 10)
+		{
+			string numberAsText = "" + (_roundNumber - 1);
+			_loopCounter.Animation = numberAsText;
 		}
 	}
 

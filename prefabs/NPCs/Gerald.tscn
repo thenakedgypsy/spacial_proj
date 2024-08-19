@@ -92,12 +92,4 @@ frame_progress = 0.715172
 
 [node name="ChatBubble" parent="." index="3"]
 z_index = 2
-position = Vector2(-2.38419e-07, -29)
-animation = &"unfold"
-frame_progress = 0.0
-
-[node name="RichTextLabel" parent="ChatBubble" index="0"]
-offset_left = -78.0
-offset_top = -14.0
-offset_right = 234.0
-offset_bottom = 39.0
+position = Vector2(0, -47)
