@@ -27,12 +27,15 @@ public partial class GigManager : Control
 	private bool _drop;
 	private bool _breakdown;
 	private AnimatedSprite2D _loopCounter;
-
+	private RichTextLabel _queueText;
+	private RichTextLabel _playingText;
 	
 
 	public override void _Ready()
 	{
 		Initialize();
+		UpdatePlayedText();
+		UpdateQueueText();
 		GD.Print($"=========== ROUND: {_roundNumber} ===========");
 	}
 
@@ -41,12 +44,13 @@ public partial class GigManager : Control
    		_currentTime += (float)delta;				
 		Sync();
 		flipSyncButton();
+	
 		
 	}
 
 	public void Initialize()  //inialize props
 	{
-		_syncButton = GetNode<Button>("Sync");
+		_syncButton = GetNode<Button>("UI/Sync");
 		Queue = new Dictionary<string, Loop>();
 		LockedLoops = new List<Loop>();
 		CurrentlyPlaying = new List<Loop>();
@@ -64,10 +68,13 @@ public partial class GigManager : Control
 		_drop = false;
 		_breakdown = false;
 		_flowScore = 0;
-		_loopCounter = GetNode<AnimatedSprite2D>("LoopCounter");
+		_loopCounter = GetNode<AnimatedSprite2D>("UI/LoopCounter");
+		_queueText = GetNode<RichTextLabel>("UI/Queue/QueueRTL");
+		_playingText = GetNode<RichTextLabel>("UI/Playing/PlayingRTL");
+
 	}
 
-		public void SyncButtonPressed() //when the sync button is pressed...
+	public void SyncButtonPressed() //when the sync button is pressed...
 	{										
 		GD.Print("Sync Pressed");				
 		if(!_syncing)				//if we are not already syncing we push the queued loops
@@ -93,7 +100,26 @@ public partial class GigManager : Control
 		}
 	}
 
-	public void flipSyncButton()
+	public void UpdateQueueText()
+	{
+		string queueText = "          ----- CURRENT QUEUE -----\n";
+		foreach(Loop loop in Queue.Values)
+		{
+			queueText += $"{loop.Instrument}: {loop.Name}\n";
+		}
+		_queueText.Text = queueText;
+	}
+
+	public void UpdatePlayedText()
+	{
+		string playingText = "      ----- CURRENTLY PLAYING -----\n";
+		foreach(Loop loop in CurrentlyPlaying)
+		{
+			playingText += $"{loop.Instrument}: {loop.Name}\n";
+		}
+		_playingText.Text = playingText;
+	}
+	public void flipSyncButton()			//disables the sync button while syncing
 	{
 		if(_syncing)
 		{
@@ -116,7 +142,7 @@ public partial class GigManager : Control
 			loop.Tags = originalLoop.Tags;	//tags object force
 			LockedLoops.Add(loop);
 		}
-		ClearQueue();
+		Queue.Clear();	
 	}
 
 	public void Sync()	//if a sync is in progess then this function checks if the time since 
@@ -172,7 +198,7 @@ public partial class GigManager : Control
 		return newLoop;
 	}
 
-	public void CalculateImpact()
+	public void CalculateImpact()		//calculates drops/breakdowns and general flowscore
 	{
 		_drop = false;
 		_breakdown = false;
@@ -214,7 +240,7 @@ public partial class GigManager : Control
 		_impactLastRound = currentImpact; //update impact last round		
 	}
 
-	public void AddToPlayedTags()
+	public void AddToPlayedTags()			//adds the tags to a total when played
 	{
 		foreach(Loop loop in CurrentlyPlaying)
 		{
@@ -239,7 +265,7 @@ public partial class GigManager : Control
 		}
 	}
 
-	public void UpdateRoundCounter()
+	public void UpdateRoundCounter()	//updates the round counter widget
 	{
 		if(_roundNumber < 10)
 		{
@@ -248,9 +274,7 @@ public partial class GigManager : Control
 		}
 	}
 
-	
-
-	public void ListTagsToDebug()
+		public void ListTagsToDebug()	//lists tags to console
 	{
 		GD.Print("Total Tags Played:");
 		foreach(string tag in _totalTags.Keys)
@@ -269,11 +293,12 @@ public partial class GigManager : Control
 			loop.Play();
 			CurrentlyPlaying.Add(loop);
 		}
+		UpdateQueueText();
+		UpdatePlayedText();
 		LockedLoops.Clear();
 		
 		
 	}
-
 
 	public void QueueLead(Loop lead)		//queues an instrument
 	{
@@ -285,6 +310,7 @@ public partial class GigManager : Control
 		{
 			Queue.Add("Lead", lead);
 		}
+		UpdateQueueText();
 		
 	}
 
@@ -298,6 +324,7 @@ public partial class GigManager : Control
 		{
 			Queue.Add("Rythm", rythm);
 		}
+		UpdateQueueText();
 	}
 
 	public void QueueBass(Loop bass)//queues an instrument
@@ -310,6 +337,7 @@ public partial class GigManager : Control
 		{
 			Queue.Add("Bass", bass);
 		}
+		UpdateQueueText();
 	}
 
 	public void QueueDrums(Loop drums)//queues an instrument
@@ -322,14 +350,13 @@ public partial class GigManager : Control
 		{
 			Queue.Add("Drums", drums);
 		}
+		UpdateQueueText();
 	}
-
-
-
 
 	public void ClearQueue()//clears the queue
 	{
-		Queue.Clear();
+		Queue.Clear();	
+		UpdateQueueText();	
 	}
 
 	public void Reset()//resets everything. universe explodes. 

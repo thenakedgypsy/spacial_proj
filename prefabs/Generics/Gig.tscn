@@ -12,49 +12,54 @@
 
 [node name="Gig" type="Node2D"]
 
-[node name="TextureRect2" type="TextureRect" parent="."]
-offset_left = 11.0
-offset_top = -281.0
-offset_right = 1939.0
-offset_bottom = 767.0
-texture = ExtResource("1_j1lmj")
-
 [node name="BandMember" parent="." instance=ExtResource("1_lcqj0")]
 position = Vector2(990, 338)
 scale = Vector2(1.48807, 1.50217)
 
-[node name="Audience" parent="." instance=ExtResource("1_xasvn")]
-position = Vector2(-119, -298)
-scale = Vector2(1.11938, 1.10024)
+[node name="Gig Manager" parent="." instance=ExtResource("1_66bcr")]
+offset_left = 7.0
+offset_top = -3.0
+offset_right = 47.0
+offset_bottom = 37.0
 
-[node name="TextureRect" type="TextureRect" parent="."]
-offset_top = 797.0
-offset_right = 40.0
-offset_bottom = 837.0
+[node name="TextureRect" type="TextureRect" parent="Gig Manager"]
+layout_mode = 0
+offset_left = -7.0
+offset_top = 804.0
+offset_right = 33.0
+offset_bottom = 843.0
 scale = Vector2(48.0304, 7.15604)
 texture = ExtResource("2_vony7")
 expand_mode = 1
 
-[node name="Gig Manager" parent="." instance=ExtResource("1_66bcr")]
-offset_left = 7.0
-offset_top = -4.0
-offset_right = 47.0
-offset_bottom = 36.0
+[node name="Background" type="TextureRect" parent="Gig Manager"]
+z_index = -1
+layout_mode = 0
+offset_left = 4.0
+offset_top = -278.0
+offset_right = 1932.0
+offset_bottom = 770.0
+texture = ExtResource("1_j1lmj")
 
-[node name="Bass" parent="." instance=ExtResource("2_jp6e3")]
-position = Vector2(1107, 918)
+[node name="Bass" parent="Gig Manager" instance=ExtResource("2_jp6e3")]
+position = Vector2(1100, 921)
 scale = Vector2(1, 0.995833)
 
-[node name="Drum" parent="." instance=ExtResource("3_j8je6")]
-position = Vector2(1345, 920)
+[node name="Drum" parent="Gig Manager" instance=ExtResource("3_j8je6")]
+position = Vector2(1338, 923)
 
-[node name="Lead" parent="." instance=ExtResource("5_71k8p")]
-position = Vector2(628, 924)
+[node name="Lead" parent="Gig Manager" instance=ExtResource("5_71k8p")]
+position = Vector2(621, 927)
 
-[node name="Rythm" parent="." instance=ExtResource("4_ukcxx")]
-position = Vector2(861, 922)
+[node name="Rythm" parent="Gig Manager" instance=ExtResource("4_ukcxx")]
+position = Vector2(854, 925)
 
-[connection signal="LoopSelected" from="Bass" to="Gig Manager" method="QueueBass"]
-[connection signal="LoopSelected" from="Drum" to="Gig Manager" method="QueueDrums"]
-[connection signal="LoopSelected" from="Lead" to="Gig Manager" method="QueueLead"]
-[connection signal="LoopSelected" from="Rythm" to="Gig Manager" method="QueueRythm"]
+[node name="Audience" parent="Gig Manager" instance=ExtResource("1_xasvn")]
+z_index = -1
+position = Vector2(-126, -295)
+scale = Vector2(1.11938, 1.10024)
+
+[connection signal="LoopSelected" from="Gig Manager/Bass" to="Gig Manager" method="QueueBass"]
+[connection signal="LoopSelected" from="Gig Manager/Drum" to="Gig Manager" method="QueueDrums"]
+[connection signal="LoopSelected" from="Gig Manager/Lead" to="Gig Manager" method="QueueLead"]
+[connection signal="LoopSelected" from="Gig Manager/Rythm" to="Gig Manager" method="QueueRythm"]
