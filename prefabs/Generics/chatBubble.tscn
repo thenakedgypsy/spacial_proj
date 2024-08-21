@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://n7ckt1u7ba2v"]
+[gd_scene load_steps=29 format=3 uid="uid://n7ckt1u7ba2v"]
 
 [ext_resource type="Texture2D" uid="uid://86l1f0tgod42" path="res://assets/sprites/UIbits/closedBubble-export.png" id="1_wam1x"]
 [ext_resource type="Texture2D" uid="uid://ceuhd0foheq8d" path="res://assets/sprites/UIbits/ChatBubble-Sheet.png" id="2_ixf2m"]
@@ -200,19 +200,22 @@ animations = [{
 "speed": 2.0
 }]
 
-[sub_resource type="Theme" id="Theme_qwjqd"]
-
 [node name="ChatBubble" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_sjsdk")
-animation = &"waiting"
-frame_progress = 0.557905
+animation = &"open"
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
-offset_left = -47.0
-offset_top = -22.0
-offset_right = 188.0
-offset_bottom = 78.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -97.5
+offset_top = -47.0
+offset_right = 137.5
+offset_bottom = 53.0
+grow_horizontal = 2
+grow_vertical = 2
 scale = Vector2(0.4, 0.4)
-theme = SubResource("Theme_qwjqd")
 bbcode_enabled = true
 scroll_active = false

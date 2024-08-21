@@ -14,20 +14,20 @@ public partial class Gerald : NPC
 		_chattedToGerald = false;
 		_chattedToArnold = false;
 		base.HasQuest = true;
-		base.AddDialogue(("Hello, My name is Gerald!", false)); 
-		base.AddDialogue(("You must be that new band I keep hearing about...", false));
-		base.AddDialogue(("Ive been stood on this corner for as long as I can remember", false));
-		base.AddDialogue(("And I have...", false));
-		base.AddDialogue(("EXCELLENT TASTE!!", false));
-		base.AddDialogue(("...in music, my tastebuds are shot these days.", false));
+		base.AddDialogue(("\n Hello, My name is Gerald!", false)); 
+		base.AddDialogue(("\nYou must be that new band I keep hearing about...", false));
+		base.AddDialogue(("\nIve been stood on this corner for as long as I can remember", false));
+		base.AddDialogue(("\nAnd I have...", false));
+		base.AddDialogue(("\nEXCELLENT TASTE!!", false));
+		base.AddDialogue(("\n...in music, my tastebuds are shot these days.", false));
 		
-		base.AddDialogue(("Aaaanyway....", true)); //1
-		base.AddDialogue(("If you want to prove yourself as a band then...", false));
-		base.AddDialogue(("First off you'll have to persuade Arnold", false));
-		base.AddDialogue(("He's the asshole with the mohawk.", false));
+		base.AddDialogue(("\nAaaanyway....", true)); //1
+		base.AddDialogue(("\nIf you want to prove yourself as a band then...", false));
+		base.AddDialogue(("\nFirst off you'll have to persuade Arnold", false));
+		base.AddDialogue(("\nHe's the asshole with the mohawk.", false));
 
-		base.AddDialogue(("Thanks for the chat, but maybe you should try talking with Arnold now...", true)); //2
-		base.AddDialogue(("..Seriously, go talk to Arnold.", false));
+		base.AddDialogue(("\nThanks for the chat, but maybe you should try talking with Arnold now...", true)); //2
+		base.AddDialogue(("\n..Seriously, go talk to Arnold.", false));
 
 		
 	}
@@ -61,6 +61,7 @@ public partial class Gerald : NPC
 			if(base.GetLoopsSeen() == 3)
 			{
 				_secondChatWithGerald = true;
+				
 				
 				GetTree().ChangeSceneToFile("res://prefabs/Generics/Gig.tscn");
 			}

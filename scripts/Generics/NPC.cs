@@ -171,6 +171,7 @@ public partial class NPC : Area2D
 
 	public void AddDialogue((string text, bool isLoopPoint) dialogue)
 	{
+		dialogue.text = "[center]" + dialogue.text +"[/center]";
 		DialogueList.Add(dialogue);
 	}
 	

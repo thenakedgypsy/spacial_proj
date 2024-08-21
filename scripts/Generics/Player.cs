@@ -3,7 +3,7 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
-    public const float Speed = 90.0f;
+    public const float Speed = 70.0f;
     private AnimatedSprite2D _sprite;
     private Vector2 _currentDirection = Vector2.Zero;
     private double _lastVerticalPressTime = 0;

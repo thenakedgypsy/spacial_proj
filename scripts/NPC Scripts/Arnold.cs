@@ -16,7 +16,7 @@ private bool _chattedToArnold;
 		//add dialogue like below. Key points will need adding to the list, keypoints will start the looped dialogue
 		//again from the line after them. 
 		//multiple key points can be added
-		base.AddDialogue(("Pfff Gerald thinks he knows about music...",false));
+		base.AddDialogue(("\nPfff Gerald thinks he knows about music...",false));
 	}
 
     public override void _Process(double delta)
@@ -46,10 +46,10 @@ private bool _chattedToArnold;
 	public void ChattedToGerald()
 	{
 		_chattedToGerald = true;
-		base.AddDialogue(("Oh so you are the new band?",false));
+		base.AddDialogue(("\nOh so you are the new band?",false));
 		base.BumpLoopPoint(); //bumping the loop point after adding the dialogue to make this the next line said
-		base.AddDialogue(("Well Gerald says he'll help you put on a show!", false));
-		base.AddDialogue(("I'll watch from over here...",true));
+		base.AddDialogue(("\nWell Gerald says he'll help you put on a show!", false));
+		base.AddDialogue(("\nI'll watch from over here...",true));
 
 	}
 }
