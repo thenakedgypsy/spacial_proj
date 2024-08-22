@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://ih5wwvnjhpwb"]
+[gd_scene load_steps=40 format=3 uid="uid://ih5wwvnjhpwb"]
 
 [ext_resource type="Script" path="res://scripts/Generics/GigManager.cs" id="1_570b6"]
 [ext_resource type="Texture2D" uid="uid://cjrcpuc8nhslx" path="res://assets/sprites/UIbits/0loopCounter.png" id="2_kneyw"]
@@ -15,9 +15,11 @@
 [ext_resource type="PackedScene" uid="uid://361yhq6wmyyc" path="res://prefabs/TestBanks/BassBank.tscn" id="13_iq16h"]
 [ext_resource type="PackedScene" uid="uid://s2a11x1k4mx7" path="res://prefabs/TestBanks/DrumBank.tscn" id="14_754u8"]
 [ext_resource type="PackedScene" uid="uid://c8rg7juessyb0" path="res://prefabs/TestBanks/RythmBank.tscn" id="15_hng03"]
+[ext_resource type="PackedScene" uid="uid://cvuyn76kgo1px" path="res://prefabs/Generics/breakdown.tscn" id="16_q4bkj"]
 [ext_resource type="Texture2D" uid="uid://b51srgr2ouxue" path="res://assets/sprites/stages/stag1.png" id="16_r14w5"]
-[ext_resource type="PackedScene" uid="uid://pyrjhiyrd66i" path="res://prefabs/Generics/audience.tscn" id="17_j5stt"]
+[ext_resource type="PackedScene" uid="uid://pyrjhiyrd66i" path="res://prefabs/Generics/Audience.tscn" id="17_j5stt"]
 [ext_resource type="PackedScene" uid="uid://r8g7gvax5pgl" path="res://prefabs/GigBits/LeadPlayer.tscn" id="18_sxu6q"]
+[ext_resource type="PackedScene" uid="uid://3puskubkhqgl" path="res://prefabs/Generics/drop.tscn" id="19_evh4i"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lm486"]
 atlas = ExtResource("2_kneyw")
@@ -192,8 +194,9 @@ TextEdit/fonts/font = null
 [node name="Gig Manager" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+offset_top = -2.0
 offset_right = 40.0
-offset_bottom = 40.0
+offset_bottom = 38.0
 script = ExtResource("1_570b6")
 
 [node name="Audience" parent="." instance=ExtResource("17_j5stt")]
@@ -235,10 +238,10 @@ autoplay = "0"
 
 [node name="Playing" type="TextureRect" parent="UI"]
 z_index = 2
-offset_left = -3.0
-offset_top = 948.0
-offset_right = 279.0
-offset_bottom = 1080.0
+offset_left = 12.0
+offset_top = 940.0
+offset_right = 294.0
+offset_bottom = 1072.0
 texture = ExtResource("11_lyfco")
 expand_mode = 1
 
@@ -253,10 +256,10 @@ autowrap_mode = 0
 
 [node name="Queue" type="TextureRect" parent="UI"]
 z_index = 2
-offset_left = -4.0
-offset_top = 813.0
-offset_right = 278.0
-offset_bottom = 945.0
+offset_left = 13.0
+offset_top = 807.0
+offset_right = 295.0
+offset_bottom = 939.0
 texture = ExtResource("11_lyfco")
 expand_mode = 1
 
@@ -268,6 +271,10 @@ offset_right = 276.0
 offset_bottom = 128.0
 theme = SubResource("Theme_itmgs")
 autowrap_mode = 0
+
+[node name="Drop" parent="UI" instance=ExtResource("19_evh4i")]
+
+[node name="Breakdown" parent="UI" instance=ExtResource("16_q4bkj")]
 
 [node name="Lead" parent="UI" instance=ExtResource("12_2w8y5")]
 z_index = 2

@@ -1,10 +1,11 @@
-[gd_scene load_steps=21 format=3 uid="uid://pyrjhiyrd66i"]
+[gd_scene load_steps=22 format=3 uid="uid://pyrjhiyrd66i"]
 
-[ext_resource type="Texture2D" uid="uid://bl4rhg0sot4cc" path="res://assets/sprites/crowd5.png" id="1_25x06"]
-[ext_resource type="Texture2D" uid="uid://c2r12etncbo57" path="res://assets/sprites/crowd4.png" id="2_1bjv3"]
-[ext_resource type="Texture2D" uid="uid://o2aov2ekposj" path="res://assets/sprites/crowd3.png" id="3_w65w8"]
-[ext_resource type="Texture2D" uid="uid://bms35vvvjvsal" path="res://assets/sprites/crowd2.png" id="4_cw4bn"]
-[ext_resource type="Texture2D" uid="uid://bm8s2ua857okm" path="res://assets/sprites/crowd1.png" id="5_gf80i"]
+[ext_resource type="Script" path="res://scripts/Generics/Audience.cs" id="1_jfi1m"]
+[ext_resource type="Texture2D" uid="uid://c6irg0k74maxw" path="res://assets/sprites/crowds/crowdDark.png" id="2_ngqci"]
+[ext_resource type="Texture2D" uid="uid://ga472arv2ub7" path="res://assets/sprites/crowds/crowdEtheral.png" id="3_k0xfu"]
+[ext_resource type="Texture2D" uid="uid://ccfusng6rg13k" path="res://assets/sprites/crowds/crowdPumping.png" id="4_cue2h"]
+[ext_resource type="Texture2D" uid="uid://jf3uilr60b2t" path="res://assets/sprites/crowds/crowdGroovy.png" id="5_08vcu"]
+[ext_resource type="Texture2D" uid="uid://sw72bqclo07n" path="res://assets/sprites/crowds/crowdUplifting.png" id="6_om0xs"]
 
 [sub_resource type="Animation" id="Animation_lhbmr"]
 length = 0.001
@@ -198,67 +199,68 @@ _data = {
 }
 
 [node name="Audience" type="Node2D"]
+script = ExtResource("1_jfi1m")
 
-[node name="1" type="AnimatableBody2D" parent="."]
+[node name="Row1" type="AnimatableBody2D" parent="."]
 position = Vector2(-38, -164)
 
-[node name="Sprite2D" type="Sprite2D" parent="1"]
-position = Vector2(1007.13, 576.281)
-texture = ExtResource("1_25x06")
+[node name="Sprite2D" type="Sprite2D" parent="Row1"]
+position = Vector2(863, 612)
+texture = ExtResource("2_ngqci")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="1"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Row1"]
 libraries = {
 "": SubResource("AnimationLibrary_lfvcq")
 }
 autoplay = "move1"
 
-[node name="2" type="AnimatableBody2D" parent="."]
+[node name="Row2" type="AnimatableBody2D" parent="."]
 position = Vector2(9, -89)
 
-[node name="Sprite2D" type="Sprite2D" parent="2"]
-position = Vector2(1007.13, 576.281)
-texture = ExtResource("2_1bjv3")
+[node name="Sprite2D" type="Sprite2D" parent="Row2"]
+position = Vector2(1016, 570)
+texture = ExtResource("3_k0xfu")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="2"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Row2"]
 libraries = {
 "": SubResource("AnimationLibrary_fkfx1")
 }
 autoplay = "move2"
 
-[node name="3" type="AnimatableBody2D" parent="."]
+[node name="Row3" type="AnimatableBody2D" parent="."]
 position = Vector2(-2, -100)
 
-[node name="Sprite2D" type="Sprite2D" parent="3"]
-position = Vector2(963.705, 642.201)
-texture = ExtResource("3_w65w8")
+[node name="Sprite2D" type="Sprite2D" parent="Row3"]
+position = Vector2(1130, 615)
+texture = ExtResource("4_cue2h")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="3"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Row3"]
 libraries = {
 "": SubResource("AnimationLibrary_et1w3")
 }
 autoplay = "move3"
 
-[node name="4" type="AnimatableBody2D" parent="."]
+[node name="Row4" type="AnimatableBody2D" parent="."]
 position = Vector2(0, -47)
 
-[node name="Sprite2D" type="Sprite2D" parent="4"]
-position = Vector2(963, 585)
-texture = ExtResource("4_cw4bn")
+[node name="Sprite2D" type="Sprite2D" parent="Row4"]
+position = Vector2(934, 577)
+texture = ExtResource("5_08vcu")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="4"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Row4"]
 libraries = {
 "": SubResource("AnimationLibrary_2lwkc")
 }
 autoplay = "move4"
 
-[node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
+[node name="Row5" type="AnimatableBody2D" parent="."]
 position = Vector2(0, -47)
 
-[node name="Sprite2D" type="Sprite2D" parent="AnimatableBody2D"]
-position = Vector2(961, 585)
-texture = ExtResource("5_gf80i")
+[node name="Sprite2D" type="Sprite2D" parent="Row5"]
+position = Vector2(1374, 598)
+texture = ExtResource("6_om0xs")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatableBody2D"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Row5"]
 libraries = {
 "": SubResource("AnimationLibrary_bwqmo")
 }

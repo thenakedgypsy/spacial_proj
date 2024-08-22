@@ -62,8 +62,8 @@ public partial class Gerald : NPC
 			{
 				_secondChatWithGerald = true;
 				
-				
-				GetTree().ChangeSceneToFile("res://prefabs/Generics/Gig.tscn");
+				BandManager.Instance.
+				GetTree().ChangeSceneToFile("res://prefabs/Generics/GigManager.tscn");
 			}
 		}
         

@@ -1,0 +1,58 @@
+[gd_scene load_steps=6 format=3 uid="uid://3puskubkhqgl"]
+
+[ext_resource type="Script" path="res://scripts/Generics/Drop.cs" id="1_lx7m8"]
+[ext_resource type="Texture2D" uid="uid://bkmbvs1yv3iwv" path="res://assets/sprites/UIbits/DROP.png" id="2_m8n5p"]
+
+[sub_resource type="Animation" id="Animation_yaqqt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1011, 868)]
+}
+
+[sub_resource type="Animation" id="Animation_45ebs"]
+resource_name = "appear"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.633333, 0.866667, 1.46667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1011, 900), Vector2(1011, 250), Vector2(1011, 250), Vector2(1011, 868)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vpoyp"]
+_data = {
+"RESET": SubResource("Animation_yaqqt"),
+"appear": SubResource("Animation_45ebs")
+}
+
+[node name="Drop" type="AnimatableBody2D"]
+position = Vector2(1011, 868)
+sync_to_physics = false
+script = ExtResource("1_lx7m8")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -427.0
+offset_top = -147.0
+offset_right = 374.0
+offset_bottom = 165.0
+texture = ExtResource("2_m8n5p")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_vpoyp")
+}

@@ -8,22 +8,22 @@ script = ExtResource("1_x6m6v")
 
 [node name="Button" type="Button" parent="."]
 offset_left = -51.0
-offset_top = -78.0
+offset_top = 53.0
 offset_right = 50.0
-offset_bottom = -47.0
+offset_bottom = 84.0
 text = "Queue"
 
 [node name="Selector" type="OptionButton" parent="Button"]
 layout_mode = 0
-offset_left = -30.0
-offset_top = 122.0
-offset_right = 134.0
-offset_bottom = 142.0
+offset_left = -31.0
+offset_top = -128.0
+offset_right = 133.0
+offset_bottom = -108.0
 
 [node name="TextureRect" type="TextureRect" parent="."]
-offset_left = -53.0
+offset_left = -78.0
 offset_top = -42.0
-offset_right = 54.0
+offset_right = 80.0
 offset_bottom = 38.0
 texture = ExtResource("2_shjdj")
 expand_mode = 1
@@ -32,7 +32,7 @@ expand_mode = 1
 layout_mode = 0
 offset_left = 3.0
 offset_top = 3.0
-offset_right = 104.0
+offset_right = 155.0
 offset_bottom = 77.0
 
 [connection signal="pressed" from="Button" to="." method="Selected"]

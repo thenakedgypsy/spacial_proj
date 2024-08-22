@@ -1,8 +1,9 @@
-[gd_scene load_steps=33 format=3 uid="uid://fq6q0sonfrep"]
+[gd_scene load_steps=34 format=3 uid="uid://fq6q0sonfrep"]
 
 [ext_resource type="Texture2D" uid="uid://t0udso2qm2sa" path="res://assets/sprites/Chibi-character-template_skin1_part2_by_AxulArt.png" id="1_krnt0"]
 [ext_resource type="Script" path="res://scripts/Generics/Player.cs" id="1_nwo5m"]
 [ext_resource type="Texture2D" uid="uid://c3y7nb1n14573" path="res://assets/sprites/BandMembers/Tank.png" id="2_2qd8j"]
+[ext_resource type="PackedScene" uid="uid://byhwrhxohb4ft" path="res://prefabs/Generics/FameTracker.tscn" id="4_w3wnf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mkr1p"]
 atlas = ExtResource("2_2qd8j")
@@ -286,8 +287,11 @@ shape = SubResource("RectangleShape2D_ovfdh")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -11)
-zoom = Vector2(4, 4)
+zoom = Vector2(5, 5)
 position_smoothing_enabled = true
+
+[node name="FameTracker" parent="Camera2D" instance=ExtResource("4_w3wnf")]
+position = Vector2(-71, 2)
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 position = Vector2(-1, 0)

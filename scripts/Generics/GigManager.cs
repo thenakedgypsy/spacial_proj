@@ -29,6 +29,8 @@ public partial class GigManager : Control
 	private AnimatedSprite2D _loopCounter;
 	private RichTextLabel _queueText;
 	private RichTextLabel _playingText;
+	private Drop _dropUI;
+	private BreakDown _breakdownUI;
 	
 
 	public override void _Ready()
@@ -71,6 +73,9 @@ public partial class GigManager : Control
 		_loopCounter = GetNode<AnimatedSprite2D>("UI/LoopCounter");
 		_queueText = GetNode<RichTextLabel>("UI/Queue/QueueRTL");
 		_playingText = GetNode<RichTextLabel>("UI/Playing/PlayingRTL");
+		_dropUI = GetNode<Drop>("UI/Drop");
+		_breakdownUI = GetNode<BreakDown>("UI/Breakdown");
+
 
 	}
 
@@ -100,7 +105,7 @@ public partial class GigManager : Control
 		}
 	}
 
-	public void UpdateQueueText()
+	public void UpdateQueueText() //updates the UI display of the list of loops currently queued
 	{
 		string queueText = "          ----- CURRENT QUEUE -----\n";
 		foreach(Loop loop in Queue.Values)
@@ -110,7 +115,7 @@ public partial class GigManager : Control
 		_queueText.Text = queueText;
 	}
 
-	public void UpdatePlayedText()
+	public void UpdatePlayedText()	//updates the UI display of the list of loops currently playing
 	{
 		string playingText = "      ----- CURRENTLY PLAYING -----\n";
 		foreach(Loop loop in CurrentlyPlaying)
@@ -119,6 +124,7 @@ public partial class GigManager : Control
 		}
 		_playingText.Text = playingText;
 	}
+
 	public void flipSyncButton()			//disables the sync button while syncing
 	{
 		if(_syncing)
@@ -131,7 +137,7 @@ public partial class GigManager : Control
 		}	
 	}
 
-		public void LockLoops()	//takes the queued loops and clones them  
+	public void LockLoops()	//takes the queued loops and clones them  
 	{								//adds the clones to a list that will be played and clears the queue.
 		foreach(string slot in Queue.Keys)
 		{
@@ -160,10 +166,23 @@ public partial class GigManager : Control
 				AddToPlayedTags();
 				GD.Print($"Your timing snapshot: Over {(int)(_beatmatchSnapshot / 8 * 10) * 10}% accurate");
 				CalculateImpact();
+				AnimateDropBreakdown();
 				_roundNumber++;
 				GD.Print($"=========== ROUND: {_roundNumber} ===========");
 				UpdateRoundCounter();			
    			}
+		}
+	}
+
+	public void AnimateDropBreakdown()	//plays the drop/breakdown animation if they are detected
+	{
+		if(_drop)
+		{
+			_dropUI.PlayAnim();
+		}
+		if(_breakdown)
+		{
+			_breakdownUI.PlayAnim();
 		}
 	}
 
@@ -274,7 +293,7 @@ public partial class GigManager : Control
 		}
 	}
 
-		public void ListTagsToDebug()	//lists tags to console
+	public void ListTagsToDebug()	//lists tags to console
 	{
 		GD.Print("Total Tags Played:");
 		foreach(string tag in _totalTags.Keys)
