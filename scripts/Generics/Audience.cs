@@ -12,7 +12,7 @@ public partial class Audience : Node
 	public Sprite2D Row4;
 	public Sprite2D Row5;
 	public List<Sprite2D> RowList;
-	public Dictionary<string,int> Taste;
+	public Dictionary<string,bool> Taste;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -23,9 +23,9 @@ public partial class Audience : Node
 		Row4 = GetNode<Sprite2D>("Row4/Sprite2D");
 		Row5 = GetNode<Sprite2D>("Row5/Sprite2D");
 		RowList = new List<Sprite2D>{Row1,Row2,Row3,Row4,Row5};
-		Taste = new Dictionary<string,int>();
+		Taste = new Dictionary<string,bool>();
 
-		SetTaste(Pumping: 10, Trippy: 10, Etheral: 5, Mellow: 5, Dark: 5);
+		SetTaste(Pumping: true, Trippy: true, Etheral: true, Mellow: true, Dark: true);
 		SetRows();
 	}
 
@@ -35,8 +35,8 @@ public partial class Audience : Node
 	}
 
 
-	public void SetTaste(int Pumping = 0, int Groovy = 0, int Trippy = 0, int Uplifting = 0, 
-						 int Etheral = 0, int Mellow = 0, int Dark = 0)
+	public void SetTaste(bool Pumping = false, bool Groovy = false, bool Trippy = false, bool Uplifting = false, 
+						 bool Etheral = false, bool Mellow = false, bool Dark = false)
 	{
 		Taste["Pumping"] = Pumping;
 		Taste["Groovy"] = Groovy;
@@ -52,7 +52,7 @@ public partial class Audience : Node
 		int i = 0;
 		foreach(string tag in Taste.Keys)
 		{
-			if(Taste[tag] > 0)
+			if(Taste[tag])
 			{
 				Texture2D texture = (Texture2D)ResourceLoader.Load($"res://assets/sprites/crowds/crowd{tag}.png");
 				if(i <= 4)
@@ -63,12 +63,9 @@ public partial class Audience : Node
 			}
 		}
 		
-	
-
-
 	}
 
-	public Dictionary<string,int> GetTaste()
+	public Dictionary<string,bool> GetTaste()
 	{
 		return this.Taste;
 	}

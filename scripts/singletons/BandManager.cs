@@ -7,10 +7,12 @@ public partial class BandManager : Node
 	public static BandManager Instance;
 
 	public Vector2 _lastPlayerPosition {set;get;}
+	public string _lastScene {set;get;}
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		_lastScene = "FirstStreet";
 		_lastPlayerPosition = new Vector2(874,309); //start position on first scene
 		Instance = this;
 	}
@@ -25,7 +27,20 @@ public partial class BandManager : Node
 		if(_lastPlayerPosition != position) //only bother updating if its changed. 
 		{
 			_lastPlayerPosition = position;
-			GD.Print($"Player Position Saved: {_lastPlayerPosition}");
+			//GD.Print($"Player Position Saved: {_lastPlayerPosition}");
 		}
 	}
+
+	public void SaveScene(Node node)
+	{
+		_lastScene = node.Name;
+		GD.Print($"Saved Last Scene as: {_lastScene}");
+	}
+
+	public void LoadLastScene()
+	{
+		GetTree().ChangeSceneToFile($"res://Scenes/{_lastScene}.tscn");
+		
+	}
+
 }

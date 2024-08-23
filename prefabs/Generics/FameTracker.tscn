@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://byhwrhxohb4ft"]
+[gd_scene load_steps=3 format=3 uid="uid://byhwrhxohb4ft"]
 
-[ext_resource type="Script" path="res://FameTracker.cs" id="1_1wq27"]
+[ext_resource type="Script" path="res://scripts/Generics/FameTracker.cs" id="1_1wq27"]
+[ext_resource type="Texture2D" uid="uid://ci0b8tb7jydfa" path="res://assets/sprites/UIbits/FAME.png" id="2_vi1lq"]
 
 [node name="FameTracker" type="Node2D"]
 script = ExtResource("1_1wq27")
@@ -8,11 +9,19 @@ script = ExtResource("1_1wq27")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer"]
-offset_left = 1531.0
-offset_top = 9.0
-offset_right = 1729.0
-offset_bottom = 49.0
-scale = Vector2(1.91826, 2.03728)
-text = "FAME: "
+offset_left = 1583.0
+offset_top = -10.0
+offset_right = 1781.0
+offset_bottom = 30.0
+scale = Vector2(6, 6.372)
+text = "234561"
 fit_content = true
 scroll_active = false
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+offset_left = 1185.0
+offset_top = -22.0
+offset_right = 1674.0
+offset_bottom = 204.0
+scale = Vector2(0.867774, 0.748572)
+texture = ExtResource("2_vi1lq")

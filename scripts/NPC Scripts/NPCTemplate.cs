@@ -6,25 +6,34 @@ public partial class NPCTemplate : NPC
 
 	public override void _Ready()
 	{
-
+		this.NPC_ID = "TemplateNPC";
 		
 		base.Initialize();
 
-		//NPS WILL REPEAT WHAT THEY SAY UNTIL THEY HIT A LINE MARKED TRUE. THEY WILL THEN REPEAT FROM THIS LINE. 
-		//MAKE FUNCTIONS AND USE THE TRIGGER MANAGER TO ADD LOGIC
-		
-		//add dialogue like below. false will not save the amount spoken,  
-		//true will set a new start point and previously spoken dialogue will not be spoken again 
+        var dialogue = new NPCDialogue();
 
-		base.AddDialogue(("This is the first thing I say.", false));
-		base.AddDialogue(("This is the second thing I say.", false));
-		base.AddDialogue(("My next line is true so if you make me speak it, il never say this again", false));
-		base.AddDialogue(("Now I'll just repeat this.", true));
+        dialogue.AddLine("Hello, traveler!");
+		dialogue.AddLine("A pleasure to meet you!", "met_npc");
+        dialogue.AddLine("Have you heard about the ancient ruins?", requiredTrigger: "met_npc");
+        dialogue.AddLine("Legend says there's treasure hidden there.", requiredTrigger: "met_npc", triggerEvent: "learned_about_ruins");
+        
+        DialogueManager.Instance.AddNPCDialogue(this.NPC_ID, dialogue);
 
 	}
 
     public override void _Process(double delta)
     {
+        
+        if(!TriggerManager.Instance.IsTriggered("met_npc"))
+        {
+            base.HasQuest = true;
+        }
+        else
+        {
+            
+            base.HasQuest = false;
+        }
+        
         base._Process(delta);
     }
 

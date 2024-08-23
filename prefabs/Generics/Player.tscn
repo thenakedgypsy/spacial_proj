@@ -287,7 +287,7 @@ shape = SubResource("RectangleShape2D_ovfdh")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -11)
-zoom = Vector2(5, 5)
+zoom = Vector2(3, 3)
 position_smoothing_enabled = true
 
 [node name="FameTracker" parent="Camera2D" instance=ExtResource("4_w3wnf")]

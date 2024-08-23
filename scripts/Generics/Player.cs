@@ -14,6 +14,7 @@ public partial class Player : CharacterBody2D
         _sprite = GetNode<AnimatedSprite2D>("sprite");
         _sprite.Animation = "idle";
         Position = BandManager.Instance._lastPlayerPosition;
+        DialogueManager.Instance.RestoreDialogueStates();
     }
 
     public override void _Process(double delta)

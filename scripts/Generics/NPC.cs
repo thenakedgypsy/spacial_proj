@@ -8,16 +8,13 @@ public partial class NPC : Area2D
 	public string name;	
 	private bool _playerNear;
 	private bool _isTalking;
-	public List<(string,bool)> DialogueList;
-	public int currentDialogue;
 	public AnimatedSprite2D ChatBubble;
 	public RichTextLabel Dialogue;					
-	public int CurrentLoopPoint; //so we can just loop back to the last item of key text 
 	private bool _bubbleOpen;
-	public int LoopPointsSeen;
 	private bool _moreToSay;
 	private AnimatedSprite2D _questMarker;
 	public bool HasQuest;
+	public string NPC_ID;
 
 	public override void _Ready()
 	{
@@ -27,16 +24,12 @@ public partial class NPC : Area2D
 
 	public void Initialize()
 	{
-		currentDialogue = 0;
 		ChatBubble = GetNode<AnimatedSprite2D>("ChatBubble");
 		Dialogue = ChatBubble.GetNode<RichTextLabel>("RichTextLabel");
 		_questMarker = GetNode<AnimatedSprite2D>("QuestMarker");
 		_playerNear = false;
 		_isTalking = false;
-		CurrentLoopPoint = 0;
-		DialogueList = new List<(string,bool)>();
 		_bubbleOpen = true;
-		LoopPointsSeen = 0;
 		_moreToSay = false;
 		HasQuest = false;
 	}
@@ -56,7 +49,7 @@ public partial class NPC : Area2D
 		{	
 			if(_isTalking)
 			{
-				_isTalking = false;									
+				_isTalking = false;								
 			}
 			else
 			{		
@@ -94,7 +87,7 @@ public partial class NPC : Area2D
 
 	public void CheckMoreToSay()
 	{
-		if(_playerNear && (CurrentLoopPoint < DialogueList.Count -1) && _bubbleOpen == false)
+		if(_playerNear && _bubbleOpen == false)
 		{
 			 
 			_moreToSay = true;			
@@ -110,6 +103,7 @@ public partial class NPC : Area2D
 	{
 		if(HasQuest && !_isTalking && !_moreToSay)
 		{
+			
 			_questMarker.Visible = true;
 		}
 		else
@@ -124,22 +118,15 @@ public partial class NPC : Area2D
 		{
       		_isTalking = false;
 			if(_bubbleOpen)
-			{
-				
+			{	
       			_bubbleOpen = false;  // Ensure the flag is reset
       			CloseChatBubble(); 
 			}
       		Dialogue.Visible = false;
-			if(CurrentLoopPoint > 0)
-			{
-				currentDialogue = CurrentLoopPoint;
-			}
-			else
-			{
-				currentDialogue = 0;
-			}
 			_playerNear = false;
 			_moreToSay = false;
+			var npcDialogue = DialogueManager.Instance.GetNPCDialogue(this.NPC_ID);
+			npcDialogue.UpdateDialogue();
 			BubbleAnimationFinished();
 			GD.Print("Player is no longer next to an NPC");
 		}
@@ -147,34 +134,27 @@ public partial class NPC : Area2D
 
 	public virtual void talk()
 	{
-		if(currentDialogue < CurrentLoopPoint)
-		{
-			currentDialogue = CurrentLoopPoint;
-		}
-		Dialogue.Text = DialogueList[currentDialogue].Item1;
-		GD.Print($"Current Dialogue: {currentDialogue} / Total Dialogue: {DialogueList.Count -1 }");
-		GD.Print($"Current Loop Point {CurrentLoopPoint} / Total Dialogue: {DialogueList.Count -1 }");
-		if(DialogueList[currentDialogue].Item2) //if is set as a loop point
-		{	
-			int previousLoopPoint = CurrentLoopPoint;
-			CurrentLoopPoint = currentDialogue;
-			GD.Print($"New Loop Point: {CurrentLoopPoint}!");
-			if(previousLoopPoint < CurrentLoopPoint)
-			{
-			LoopPointsSeen++;
-			GD.Print($"Number of New Loop Points Seen: {LoopPointsSeen}");
-			}
-		}
-		BumpDialogue();
+		var npcDialogue = DialogueManager.Instance.GetNPCDialogue(this.NPC_ID);
+    	if (npcDialogue == null) return;
 
+    	var nextLine = npcDialogue.GetNextLine();
+    	if (nextLine != null)
+    	{
+       		DisplayDialogue(nextLine.Text);
+       		if (!string.IsNullOrEmpty(nextLine.TriggerEvent))
+       		{
+       		    TriggerManager.Instance.TriggerEvent(nextLine.TriggerEvent);
+       		    
+       		}
+    	}
 	}
 
-	public void AddDialogue((string text, bool isLoopPoint) dialogue)
+	public void DisplayDialogue(string text)
 	{
-		dialogue.text = "[center]" + dialogue.text +"[/center]";
-		DialogueList.Add(dialogue);
+		Dialogue.Text = text;
 	}
-	
+
+
 	public void OpenChatBubble()
 	{
 		_moreToSay = false;
@@ -212,35 +192,8 @@ public partial class NPC : Area2D
 	}
 
 
-	public int GetCurrentLoopPoint()
-	{
-		return this.CurrentLoopPoint;
-	}
 
-	public void BumpDialogue()
-	{
-		if(currentDialogue < DialogueList.Count - 1)
-		{
-			currentDialogue++;
-		}	
-	}
-	public void ForceKey(int key)
-	{
-		this.CurrentLoopPoint = key;
-	}
 
-	public void BumpLoopPoint()
-	{
-		if(CurrentLoopPoint < DialogueList.Count - 1)
-		{
-			this.CurrentLoopPoint++;
-		}
-	}
-
-	public int GetLoopsSeen()
-	{
-		return this.LoopPointsSeen;
-	}
 
 }
 

@@ -1,0 +1,65 @@
+[gd_scene load_steps=8 format=3 uid="uid://b3djo84wqj2e1"]
+
+[ext_resource type="PackedScene" uid="uid://c3eiflikb4tin" path="res://prefabs/Generics/NPC.tscn" id="1_3x8mn"]
+[ext_resource type="Script" path="res://scripts/NPC Scripts/GigEx.cs" id="2_wj12f"]
+[ext_resource type="Texture2D" uid="uid://di743kmvhty0p" path="res://assets/sprites/street characters/$mascandroid1.png" id="3_3aa5b"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_agyfm"]
+atlas = ExtResource("3_3aa5b")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xbjd8"]
+atlas = ExtResource("3_3aa5b")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0llfg"]
+atlas = ExtResource("3_3aa5b")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hv5sy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_agyfm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_agyfm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_agyfm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xbjd8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_agyfm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_agyfm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_agyfm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_agyfm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_agyfm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0llfg")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[node name="NPC" instance=ExtResource("1_3x8mn")]
+script = ExtResource("2_wj12f")
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_hv5sy")
+frame_progress = 0.66174
+
+[node name="ChatBubble" parent="." index="3"]
+z_index = 5

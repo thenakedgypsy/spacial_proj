@@ -14,6 +14,6 @@ public partial class FameTracker : Node2D
 	public override void _Process(double delta)
 	{
 		int fame = FameManager.Instance.GetFame();
-		Display.Text = $"FAME: {fame}";
+		Display.Text = $"{fame}";
 	}
 }

@@ -9,7 +9,7 @@ public partial class FameManager : Node
 	public static FameManager Instance;
 	public int Fame;
 	public int CurrentGigFlowscore;
-	public int CurrentGigAudiencescore;
+	
 
 
 	
@@ -19,7 +19,7 @@ public partial class FameManager : Node
 	{
 		
 		Instance = this;
-		Fame = 0;
+		Fame = 1337;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -30,6 +30,11 @@ public partial class FameManager : Node
 	public int GetFame()
 	{
 		return Instance.Fame;
+	}
+
+	public void AddFame(int toAdd)
+	{
+		Instance.Fame += toAdd;
 	}
 
 

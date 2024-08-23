@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Runtime.CompilerServices;
 
 public partial class GigManager : Control
@@ -31,6 +32,10 @@ public partial class GigManager : Control
 	private RichTextLabel _playingText;
 	private Drop _dropUI;
 	private BreakDown _breakdownUI;
+	public Audience Audience;
+	
+	[Signal]
+    public delegate void GigIsOverEventHandler(int flow, int audience);
 	
 
 	public override void _Ready()
@@ -46,7 +51,8 @@ public partial class GigManager : Control
    		_currentTime += (float)delta;				
 		Sync();
 		flipSyncButton();
-	
+		ChangeToFinishButton();
+
 		
 	}
 
@@ -64,7 +70,7 @@ public partial class GigManager : Control
 		_firstSyncThisRound = true;
 		_tagsPlayed = new List<Dictionary<string, int>>();
 		_totalTags = new Dictionary<string,int>();
-		_roundNumber = 1;
+		_roundNumber = 8;
 		_changeFactor = 0f;
 		_impactLastRound = 0;
 		_drop = false;
@@ -75,35 +81,39 @@ public partial class GigManager : Control
 		_playingText = GetNode<RichTextLabel>("UI/Playing/PlayingRTL");
 		_dropUI = GetNode<Drop>("UI/Drop");
 		_breakdownUI = GetNode<BreakDown>("UI/Breakdown");
+		Audience = GetNode<Audience>("Audience");
 
 
 	}
 
 	public void SyncButtonPressed() //when the sync button is pressed...
-	{										
-		GD.Print("Sync Pressed");				
-		if(!_syncing)				//if we are not already syncing we push the queued loops
-		{							//into the lockedloops
-	    LockLoops();
-		}
-	    GD.Print("Syncing Audio...");
+	{	
+									
+			GD.Print("Sync Pressed");				
+			if(!_syncing)				//if we are not already syncing we push the queued loops
+			{							//into the lockedloops
+		    LockLoops();
+			}
+		    GD.Print("Syncing Audio...");
+
+		    if (!_timerStarted)
+    		{									//first press
+    	    	_syncTimer = _currentTime;		
+    	    	_timerStarted = true;			//start the timer
+				PlayLoops();
+				AddToPlayedTags();
+				CalculateImpact(); 	//setting initial scores
+				_roundNumber++;
+				UpdateRoundCounter();
+				GD.Print($"=========== ROUND: {_roundNumber} ===========");			//play the first queued loops
+    		}
+			else
+			{
+				_syncing = true;				//not first press, start the sync. 
+			}
 		
-	    if (!_timerStarted)
-    	{									//first press
-        	_syncTimer = _currentTime;		
-        	_timerStarted = true;			//start the timer
-			PlayLoops();
-			AddToPlayedTags();
-			CalculateImpact(); 	//setting initial scores
-			_roundNumber++;
-			UpdateRoundCounter();
-			GD.Print($"=========== ROUND: {_roundNumber} ===========");			//play the first queued loops
-    	}
-		else
-		{
-			_syncing = true;				//not first press, start the sync. 
-		}
 	}
+	
 
 	public void UpdateQueueText() //updates the UI display of the list of loops currently queued
 	{
@@ -155,21 +165,32 @@ public partial class GigManager : Control
 	{					//the last loop finished is a mulitple of our loop length (within flexibility range)
 		if(_syncing)    //if it is then we call the PlayLoops function.
 		{
-			
+			if(_roundNumber == 9)
+			{
+				LockedLoops.Clear();
+			}
    			float timeSinceSync = _currentTime - _syncTimer;
 			getSnapShot(timeSinceSync);			
 			//GD.Print($"Syncing Audio at {(int)_loopLength} :: {Math.Abs(timeSinceSync % _loopLength)}");
-   			if (timeSinceSync >= 8f && Math.Abs(timeSinceSync % _loopLength) <= _syncFlexibility)
+   			
+			if (timeSinceSync >= 8f && Math.Abs(timeSinceSync % _loopLength) <= _syncFlexibility)
    			{								
    			    PlayLoops();
-				GD.Print("=========== SYNCED!! ===========");
-				AddToPlayedTags();
-				GD.Print($"Your timing snapshot: Over {(int)(_beatmatchSnapshot / 8 * 10) * 10}% accurate");
-				CalculateImpact();
-				AnimateDropBreakdown();
-				_roundNumber++;
-				GD.Print($"=========== ROUND: {_roundNumber} ===========");
-				UpdateRoundCounter();			
+				if(_roundNumber < 9)
+				{
+					GD.Print("=========== SYNCED!! ===========");
+					AddToPlayedTags();
+					GD.Print($"Your timing snapshot: Over {(int)(_beatmatchSnapshot / 8 * 10) * 10}% accurate");
+					CalculateImpact();
+					AnimateDropBreakdown();
+					_roundNumber++;
+					GD.Print($"=========== ROUND: {_roundNumber} ===========");
+					UpdateRoundCounter();
+				}
+				else
+				{
+					SendScores();
+				}			
    			}
 		}
 	}
@@ -385,4 +406,37 @@ public partial class GigManager : Control
 		_timerStarted = false;
 		LockedLoops.Clear();
 	}
+
+	public void SendScores()
+	{
+		int audScore = CalculateAudienceScore();
+		GD.Print("Emitting Signal for Scoring");
+		EmitSignal(nameof(GigIsOver), _flowScore, audScore);
+	}
+
+	public int CalculateAudienceScore()
+	{
+		int score = 0;
+		Dictionary<string,bool> audTaste = Audience.GetTaste();
+		foreach(string tag in audTaste.Keys)
+		{
+			if(audTaste[tag])
+			{
+				if(_totalTags.ContainsKey(tag))
+				{
+					score = score + _totalTags[tag];
+				}
+			}
+		}		
+		return score;
+	}
+
+	public void ChangeToFinishButton()
+	{
+		if(_roundNumber == 9)
+		{
+			_syncButton.Text = "Finish Gig";
+		}
+	}
+
 }

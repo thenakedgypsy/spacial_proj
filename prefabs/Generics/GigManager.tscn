@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://ih5wwvnjhpwb"]
+[gd_scene load_steps=41 format=3 uid="uid://ih5wwvnjhpwb"]
 
 [ext_resource type="Script" path="res://scripts/Generics/GigManager.cs" id="1_570b6"]
 [ext_resource type="Texture2D" uid="uid://cjrcpuc8nhslx" path="res://assets/sprites/UIbits/0loopCounter.png" id="2_kneyw"]
@@ -20,6 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://pyrjhiyrd66i" path="res://prefabs/Generics/Audience.tscn" id="17_j5stt"]
 [ext_resource type="PackedScene" uid="uid://r8g7gvax5pgl" path="res://prefabs/GigBits/LeadPlayer.tscn" id="18_sxu6q"]
 [ext_resource type="PackedScene" uid="uid://3puskubkhqgl" path="res://prefabs/Generics/drop.tscn" id="19_evh4i"]
+[ext_resource type="PackedScene" uid="uid://ds2l2jfh5j7mr" path="res://prefabs/Generics/ScoreManager.tscn" id="21_ypcxe"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lm486"]
 atlas = ExtResource("2_kneyw")
@@ -200,12 +201,12 @@ offset_bottom = 38.0
 script = ExtResource("1_570b6")
 
 [node name="Audience" parent="." instance=ExtResource("17_j5stt")]
-position = Vector2(-113, -304)
+position = Vector2(-111, -350)
 scale = Vector2(1.11938, 1.10024)
 
 [node name="BandMember" parent="." instance=ExtResource("18_sxu6q")]
 z_index = -1
-position = Vector2(996, 332)
+position = Vector2(985, 364)
 scale = Vector2(1.48807, 1.50217)
 
 [node name="Background" type="TextureRect" parent="."]
@@ -320,6 +321,15 @@ offset_right = 1889.0
 offset_bottom = 44.0
 text = "RESET ALL"
 
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.817409, 0.878389, 0.934904, 1)
+
+[node name="ScoreManager" parent="." instance=ExtResource("21_ypcxe")]
+visible = false
+z_index = 5
+position = Vector2(-5, 4)
+
+[connection signal="GigIsOver" from="." to="ScoreManager" method="RecieveScores"]
 [connection signal="LoopSelected" from="UI/Lead" to="." method="QueueLead"]
 [connection signal="LoopSelected" from="UI/Bass" to="." method="QueueBass"]
 [connection signal="LoopSelected" from="UI/Drum" to="." method="QueueDrums"]
